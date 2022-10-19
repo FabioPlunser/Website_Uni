@@ -1,0 +1,12 @@
+/target
+/static/node_modules
+/static/dist
+.svelte-kit 
+dist 
+node_modules 
+.vscode
+.DS_STORE
+/static/dist
+/static/node_modules
+/static/.vscode
+
