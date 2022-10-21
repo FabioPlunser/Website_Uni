@@ -3,17 +3,22 @@ from selenium.webdriver.common.by import By
 from selenium import webdriver
 from functools import partial
 from flask import *
+from flask_cors import CORS
+
 import json
 import time
 
 app = Flask(__name__)
+CORS(app)
 
 drivers = []
 
-
-@app.route('/api/login', methods=['GET'])
+#TODO if session expires new login is required must be checked on every api call 
+# 
+@app.route('/api/login', methods=['POST', 'GET'])
 def api():
     body = request.get_json()
+    print(body)
     options = Options()
     options.headless = True
     driver = webdriver.Chrome(options=options)
@@ -38,11 +43,10 @@ def api():
     drivers.append(driver)
     return data
 
-
+# Delete driver with client LogsOut
 @app.route("/api/logout", methods=['GET'])
 def logout():
     for driver in drivers:
-        # print(driver.session_id, request.get_json().get('session'))
         if driver.session_id == request.get_json().get('session'):
             driver.quit()
             drivers.remove(driver)
@@ -57,4 +61,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=3000)
+    app.run(debug=True, port=3002)

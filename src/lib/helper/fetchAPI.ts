@@ -24,3 +24,21 @@ export async function getCourse(id: number, name: string){
     if(res.ok) return res2;
     throw error(res2.message);
 }
+
+export async function login(username: string, password:string){
+    console.log("login");
+    
+}
+export async function logout(sessionid:string){
+    let res = await fetch("http://localhost:3002/api/logout", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({session: sessionid})
+    })
+    let res2 = await res.json()
+    if(res2.ok) return res2; 
+    throw error(res2.message);
+}
