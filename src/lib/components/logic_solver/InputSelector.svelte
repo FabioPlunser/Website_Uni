@@ -36,32 +36,60 @@
 
 <main class="m-5 flex  flex-row">
 	<div class="flex flex-col">
-		<label for="NumInputs">Number of Inputs:</label>
+		<label for="NumInputs">Number of Inputs[1-6]:</label>
 		<input
 			class="input m-1"
 			id="NumInputs"
 			type="number"
-			max="6"
-			min="1"
+			max=6
+			min=1
 			bind:value={num_inputs}
 		/>
-		<label for="NumOutputs">Number of Outputs:</label>
-		<input class="input m-1" id="NumOutputs" type="number" bind:value={num_outputs} />
-	</div>
-	
+		<label for="NumOutputs">Number of Outputs[1-*]:</label>
+		<input min=1 class="input m-1" id="NumOutputs" type="number" bind:value={num_outputs} />
 
-	<div class="flex flex-col">
+		<div>
+			<label for="InputSelectorModal" class="btn">Edit Input/Output names</label>
+		</div>
+	</div>
+
+
+	<input type="checkbox" id="InputSelectorModal" class="modal-toggle" />
+	<label for="InputSelectorModal" class="modal cursor-pointer">
+		<label class="modal-box relative" for="">
+				<h1 class="font-bold text-lg">Edit Input/Output names</h1>
+				<h3>Input names</h3>
+				{#if input_names.length>0}
+					{#each input_names as _, i}
+						<input class="input m-1 bg-slate-600" type="text" bind:value={input_names[i]} />
+					{/each}
+				{/if}
+				<h3>Output Names</h3>
+				{#if output_names.length>0}
+					{#each output_names as _, i}
+						<input class="input m-1 bg-slate-600" type="text" bind:value={output_names[i]} />
+					{/each}
+				{/if}
+
+				<div class="modal-action">
+					<label for="InputSelectorModal" class="btn">Close</label>
+				</div>
+		</label>
+	</label>
+
+
+	<!-- <div class="flex flex-col flex-wrap">
 		{#each input_names as name, idx}
-			<label for={"InputName" + idx}>Input Name {idx}:</label>
-			<input class="input m-1" id={"InputName" + idx} type="text" bind:value={name} />
+			<label class="flex-1" for={"InputName" + idx}>Input Name {idx}:</label>
+			<input class="flex-1 input m-1" id={"InputName" + idx} type="text" bind:value={name} />
 		{/each}
 	</div>
 
 
-	<div class="flex flex-col">
+	<div class="flex flex-col flex-wrap">
 		{#each output_names as name, idx}
-			<label for="OutputName {idx}">Output Name {idx}:</label>
-			<input class="input m-1" id="OutputName {idx}" type="text" bind:value={name} />
+			<label class="flex-1" for="OutputName {idx}">Output Name {idx}:</label>
+			<input  class="flex-1 input m-1" id="OutputName {idx}" type="text" min=1 bind:value={name} />
 		{/each}
-	</div>
+	</div> -->
 </main>
