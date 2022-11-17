@@ -49,7 +49,7 @@
 		<input min=1 class="input m-1" id="NumOutputs" type="number" bind:value={num_outputs} />
 
 		<div>
-			<label for="InputSelectorModal" class="btn">Edit Input/Output names</label>
+			<label for="InputSelectorModal" class="btn btn-primary">Edit Input/Output names</label>
 		</div>
 	</div>
 

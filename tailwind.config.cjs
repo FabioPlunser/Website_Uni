@@ -2,11 +2,14 @@
 module.exports = {
   content: [
     "./src/**/*.{html,js,svelte,ts}",
-    "./node_modules/@brainandbones/skeleton/**/*.{html,js,svelte,ts}",
+    require("path").join(
+      require.resolve("@brainandbones/skeleton"),
+      "../**/*.{html,js,svelte,ts}"
+    ),
   ],
-  theme: {
-    extend: {},
-  },
+  darkMode: "class",
+  theme: {},
+
   plugins: [
     require("daisyui"),
     require("flowbite/plugin"),
