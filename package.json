@@ -11,17 +11,20 @@
     "lint": "eslint ."
   },
   "devDependencies": {
+    "@brainandbones/skeleton": "^0.67.5",
     "@fullcalendar/adaptive": "^5.11.3",
     "@fullcalendar/common": "^5.11.3",
     "@fullcalendar/core": "^5.11.3",
     "@fullcalendar/daygrid": "^5.11.3",
     "@fullcalendar/interaction": "^5.11.3",
     "@fullcalendar/list": "^5.11.3",
+    "@fullcalendar/resource-timegrid": "^5.11.3",
     "@fullcalendar/resource-timeline": "^5.11.3",
     "@fullcalendar/timegrid": "^5.11.3",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/adapter-static": "^1.0.0-next.39",
     "@sveltejs/kit": "next",
+    "@tailwindcss/typography": "^0.5.8",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
     "autoprefixer": "^10.4.8",
@@ -37,12 +40,13 @@
     "svelte-preprocess": "^4.10.7",
     "svelte-select": "^4.4.7",
     "tailwindcss": "^3.1.8",
+    "tailwindcss-textshadow": "^2.1.3",
     "tslib": "^2.3.1",
     "typescript": "^4.7.4",
     "vite": "^3.0.4"
   },
   "type": "module",
   "dependencies": {
-    "@fullcalendar/resource-timegrid": "^5.11.3"
+    "bootstrap-icons": "^1.10.2"
   }
 }

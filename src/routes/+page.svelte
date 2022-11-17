@@ -1,1 +1,3 @@
-<h1><a href="/courseSelector">CourseSelector</a></h1>
+<script lang="ts">
+	import SideBar from "$src/lib/components/sideBar.svelte";
+</script>

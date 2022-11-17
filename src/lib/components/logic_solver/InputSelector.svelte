@@ -29,37 +29,39 @@
 			);
 		} else if (diff < 0) {
 			return arr.slice(0, len);
-		}
+		}4
 		return arr;
 	}
 </script>
 
-<main class="m-5">
-	<label for="NumInputs">Number of Inputs:</label>
-	<input
-		id="NumInputs"
-		type="number"
-		max="6"
-		min="1"
-		bind:value={num_inputs}
-	/>
-	<br />
-	<label for="NumOutputs">Number of Outputs:</label>
-	<input id="NumOutputs" type="number" bind:value={num_outputs} />
+<main class="m-5 flex  flex-row">
+	<div class="flex flex-col">
+		<label for="NumInputs">Number of Inputs:</label>
+		<input
+			class="input m-1"
+			id="NumInputs"
+			type="number"
+			max="6"
+			min="1"
+			bind:value={num_inputs}
+		/>
+		<label for="NumOutputs">Number of Outputs:</label>
+		<input class="input m-1" id="NumOutputs" type="number" bind:value={num_outputs} />
+	</div>
+	
 
-	<br />
+	<div class="flex flex-col">
+		{#each input_names as name, idx}
+			<label for={"InputName" + idx}>Input Name {idx}:</label>
+			<input class="input m-1" id={"InputName" + idx} type="text" bind:value={name} />
+		{/each}
+	</div>
 
-	{#each input_names as name, idx}
-		<br />
-		<label for={"InputName" + idx}>Input Name {idx}:</label>
-		<input id={"InputName" + idx} type="text" bind:value={name} />
-	{/each}
 
-	<br />
-
-	{#each output_names as name, idx}
-		<br />
-		<label for={"OutputName" + idx}>Output Name {idx}:</label>
-		<input id={"OutputName" + idx} type="text" bind:value={name} />
-	{/each}
+	<div class="flex flex-col">
+		{#each output_names as name, idx}
+			<label for="OutputName {idx}">Output Name {idx}:</label>
+			<input class="input m-1" id="OutputName {idx}" type="text" bind:value={name} />
+		{/each}
+	</div>
 </main>
