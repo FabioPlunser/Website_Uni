@@ -29,39 +29,81 @@
 		} else if (diff < 0) {
 			return arr.slice(0, len);
 		}
+		4;
 		return arr;
 	}
 </script>
 
-<main class="m-5">
-	<!-- TODO: Make Labels/Inputs reusable? -->
-	<label for="NumInputs">Number of Inputs:</label>
-	<input
-		id="NumInputs"
-		type="number"
-		max="6"
-		min="1"
-		bind:value={num_inputs}
-	/>
+<main class="m-5 flex  flex-row">
+	<div class="flex flex-col">
+		<label for="NumInputs">Number of Inputs[1-6]:</label>
+		<input
+			class="input m-1"
+			id="NumInputs"
+			type="number"
+			max="6"
+			min="1"
+			bind:value={num_inputs}
+		/>
+		<label for="NumOutputs">Number of Outputs[1-*]:</label>
+		<input
+			min="1"
+			class="input m-1"
+			id="NumOutputs"
+			type="number"
+			bind:value={num_outputs}
+		/>
 
-	<br />
+		<div>
+			<label for="InputSelectorModal" class="btn btn-primary"
+				>Edit Input/Output names</label
+			>
+		</div>
+	</div>
 
-	<label for="NumOutputs">Number of Outputs:</label>
-	<input id="NumOutputs" type="number" bind:value={num_outputs} />
+	<input type="checkbox" id="InputSelectorModal" class="modal-toggle" />
+	<label for="InputSelectorModal" class="modal cursor-pointer">
+		<label class="modal-box relative" for="">
+			<h1 class="font-bold text-lg">Edit Input/Output names</h1>
+			<h3>Input names</h3>
+			{#if input_names.length > 0}
+				{#each input_names as _, i}
+					<input
+						class="input m-1 bg-slate-600"
+						type="text"
+						bind:value={input_names[i]}
+					/>
+				{/each}
+			{/if}
+			<h3>Output Names</h3>
+			{#if output_names.length > 0}
+				{#each output_names as _, i}
+					<input
+						class="input m-1 bg-slate-600"
+						type="text"
+						bind:value={output_names[i]}
+					/>
+				{/each}
+			{/if}
 
-	<br />
+			<div class="modal-action">
+				<label for="InputSelectorModal" class="btn">Close</label>
+			</div>
+		</label>
+	</label>
 
-	{#each input_names as name, idx}
-		<br />
-		<label for={"InputName" + idx}>Input Name {idx}:</label>
-		<input id={"InputName" + idx} type="text" bind:value={name} />
-	{/each}
+	<!-- <div class="flex flex-col flex-wrap">
+		{#each input_names as name, idx}
+			<label class="flex-1" for={"InputName" + idx}>Input Name {idx}:</label>
+			<input class="flex-1 input m-1" id={"InputName" + idx} type="text" bind:value={name} />
+		{/each}
+	</div>
 
-	<br />
 
-	{#each output_names as name, idx}
-		<br />
-		<label for={"OutputName" + idx}>Output Name {idx}:</label>
-		<input id={"OutputName" + idx} type="text" bind:value={name} />
-	{/each}
+	<div class="flex flex-col flex-wrap">
+		{#each output_names as name, idx}
+			<label class="flex-1" for="OutputName {idx}">Output Name {idx}:</label>
+			<input  class="flex-1 input m-1" id="OutputName {idx}" type="text" min=1 bind:value={name} />
+		{/each}
+	</div> -->
 </main>

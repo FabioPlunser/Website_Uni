@@ -7,7 +7,7 @@ const config: UserConfig = {
 		dedupe: ['@fullcalendar/common'],
 	},
 	optimizeDeps: {
-		include: ['@fullcalendar/common'],
+		include: ['@fullcalendar/common', "highlight.js", "highlight.js/lib/core"],
 	}
 };
 
