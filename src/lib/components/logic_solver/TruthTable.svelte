@@ -7,20 +7,18 @@
 	// Output Variables
 	export let values: boolean[][];
 
-	// State Tracker
-	$: v /*: boolean[][] */ = Array.from({ length: num_outputs }, (_) =>
+	let num_inputs: number;
+	$: num_inputs = input_names == null ? 0 : input_names.length;
+	let num_outputs: number;
+	$: num_outputs = output_names == null ? 0 : output_names.length;
+	let v: boolean[][];
+	$: v = Array.from({ length: num_outputs }, (_) =>
 		new Array(2 ** num_inputs).fill(false)
 	);
 
-	$: num_inputs /* : number*/ = input_names == null ? 0 : input_names.length;
-	$: num_outputs /* : number */ =
-		output_names == null ? 0 : output_names.length;
-
-	function boolToString(b: boolean): String {
-		return b ? "1" : "0";
-	}
-
 	$: values = v;
+
+	let boolToString = (b: boolean) => (b ? "1" : "0");
 </script>
 
 {#if input_names != null && output_names != null}

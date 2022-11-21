@@ -2,7 +2,6 @@
 	// Output Variables
 	export let num_inputs: number = 2;
 	export let num_outputs: number = 1;
-
 	export let input_names: String[] = Array.from(
 		{ length: num_inputs },
 		(_, i) => genInputName(i)
@@ -35,6 +34,7 @@
 </script>
 
 <main class="m-5">
+	<!-- TODO: Make Labels/Inputs reusable? -->
 	<label for="NumInputs">Number of Inputs:</label>
 	<input
 		id="NumInputs"
@@ -43,7 +43,9 @@
 		min="1"
 		bind:value={num_inputs}
 	/>
+
 	<br />
+
 	<label for="NumOutputs">Number of Outputs:</label>
 	<input id="NumOutputs" type="number" bind:value={num_outputs} />
 
