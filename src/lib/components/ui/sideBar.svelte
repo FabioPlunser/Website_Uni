@@ -7,7 +7,7 @@
     <div class="overflow-y-auto py-4 px-2 rounded bg-gray-800 h-screen {sideBar ? "w-auto" : "w-12"} md:text-xl md:px-0" >
        <ul class="space-y-2">     
             <li>
-                <button class="ml-2" on:click={() => {sideBar = !sideBar}}>
+                <button class="ml-2 text-white" on:click={() => {sideBar = !sideBar}}>
                     <i class="bi bi-list cursor-pointer {sideBar ? "rotate-90" : ""} duration-100 md:text-xl"></i>
                 </button>
             </li>  

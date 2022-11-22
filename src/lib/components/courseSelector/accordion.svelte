@@ -1,6 +1,6 @@
 <script lang="ts">
-	import CourseTimes from '$components/courseTimes.svelte';
-    import Spinner from "$components/spinner.svelte";
+	import CourseTimes from '$components/courseSelector/courseTimes.svelte';
+    import Spinner from "$components/courseSelector/spinner.svelte";
     import { getLFUID } from '$lib/helper/fetchAPI';
 
     let open = false;
@@ -9,8 +9,8 @@
     export let courseVarationID: number;
 </script>
 
-<div class="relative w-auto overflow-hidden">
-    <div class="bg-slate-800 h-12 w-full pl-5 flex items-center {open ? "rounded-t-lg" : "rounded-lg"}">
+<div class="relative w-auto overflow-hidden" on:click={()=> {open = !open}}>
+    <div class="bg-slate-800 h-12 w-full pl-5 flex items-center {open ? "rounded-t-lg" : "rounded-lg"}" on:click={()=> {open = !open}}>
         <button on:click={()=> {open = !open}}><h1 class="text-lg">{title}</h1></button>
     </div>
     <div class="absolute top-3 right-3">

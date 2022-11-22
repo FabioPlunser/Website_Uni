@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Spinner from '$components/spinner.svelte';
+	import Spinner from '$components/courseSelector/spinner.svelte';
     import { getCourse } from "$lib/helper/fetchAPI";
     import { selectedCoursesStore } from "$lib/stores/selectedCourses";
 

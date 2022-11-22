@@ -1,10 +1,10 @@
 <script lang="ts">
     // #TODO Redo design add to website.
     import {getLFU, getLFUID } from "$lib/helper/fetchAPI";
-    import Spinner from "$components/spinner.svelte";
-    import Select from '$components/select.svelte';
-	  import Accordion from '$components/accordion.svelte';
-	  import CourseTimes from '$components/courseTimes.svelte';
+    import Spinner from "$components/courseSelector/spinner.svelte";
+    import Select from '$components/courseSelector/select.svelte';
+	  import Accordion from '$src/lib/components/courseSelector/accordion.svelte';
+	  import CourseTimes from '$components/courseSelector/courseTimes.svelte';
 
 
 
@@ -213,12 +213,3 @@
       </div>
     <!-- </div> -->
 </main>
-
-
-<style>
-  :global([role="columnheader"], [role="rowheader"], [role="gridcell"], [role="row"], [role="grid"]) {
-    background-color: #111729 !important;
-    color: white;
-  }
-
-</style>

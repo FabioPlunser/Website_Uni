@@ -28,7 +28,7 @@
 </script>
 
 {#if input_names != null && output_names != null}
-	<div class="flex overflow-x-auto">
+	<div class="flex overflow-x-auto text-white">
 		<table class="table table-zebra table-fixed border-seperate">
 			<thead>
 				<tr>

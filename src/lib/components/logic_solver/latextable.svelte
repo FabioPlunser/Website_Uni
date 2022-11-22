@@ -74,9 +74,12 @@
     }
 </script>
 
-<div id="LatexTable" class="mockup-code">
-    <button on:click={copyToClipboard} type="button" title="Copy Code" class="block ml-auto mr-2 -mt-10 hover:text-gray-600"><i class="text-3xl p-0 m-0 bi bi-file-code-fill"></i></button>
-    <pre class="p-2"><code class="language-tex p-2">{@html highlight}</code></pre>
+<div class="mx-4 p-2 bg-stone-900 rounded-xl overflow-auto">
+    <button on:click={copyToClipboard} type="button" title="Copy Code" class="block ml-auto mr-2 hover:text-gray-600"><i class="text-3xl p-0 m-0 bi bi-file-code-fill"></i></button>
+    <!-- <pre class="p-2"><code class="language-tex p-2">{@html highlight}</code></pre> -->
+    <div class="overflow-auto">
+        <pre class="p-2"><code class="language-tex p-2">{@html highlight}</code></pre>
+    </div>
 </div>
 
 <style>
