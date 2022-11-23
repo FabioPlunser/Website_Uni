@@ -16,8 +16,12 @@
     >
         <h1 class="text-lg">{title}</h1>
     </div>
-    <div class="absolute top-3 right-3">
-        <i class="bi bi-caret-down transition-transform duration-200" />
+    <div
+        class="absolute top-3 right-3 transition-transform duration-200 {open
+            ? 'rotate-0'
+            : 'rotate-180'}"
+    >
+        <i class="bi bi-caret-down" />
     </div>
     {#key open}
         <div
