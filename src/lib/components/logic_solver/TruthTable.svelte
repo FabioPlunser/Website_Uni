@@ -4,6 +4,10 @@
 	export let output_names: String[];
 	export let editable: boolean = false;
 
+	export let boolToString: (b: boolean) => string = (b: boolean) => {
+		return b ? "1" : "0";
+	};
+
 	// Output Variables
 	export let values: boolean[][];
 
@@ -11,17 +15,16 @@
 	$: num_inputs = input_names == null ? 0 : input_names.length;
 	let num_outputs: number;
 	$: num_outputs = output_names == null ? 0 : output_names.length;
+
 	let v: boolean[][];
 	$: v = Array.from({ length: num_outputs }, (_) =>
 		new Array(2 ** num_inputs).fill(false)
 	);
 
 	$: values = v;
-
-	let boolToString = (b: boolean) => (b ? "1" : "0");
 </script>
 
-{#if input_names != null && output_names != null}
+{#if num_inputs > 0 && num_outputs > 0}
 	<div class="flex overflow-x-auto">
 		<table class="table table-zebra table-fixed border-seperate">
 			<thead>
@@ -44,24 +47,28 @@
 								)}
 							</td>
 						{/each}
-						{#each { length: num_outputs } as _, i}
-							{#if editable}
+						{#if editable}
+							{#each { length: num_outputs } as _, i}
 								<td
 									class="cursor-pointer hover:text-gray-500"
-									on:click={(e) =>
+									on:click={(_) =>
 										(values[i][row] = !values[i][row])}
 								>
 									{boolToString(values[i][row])}
 								</td>
-							{:else}
-								<td>
+							{/each}
+						{:else}
+							{#each { length: num_outputs } as _, i}
+								<td class="hover:text-gray-500">
 									{boolToString(values[i][row])}
 								</td>
-							{/if}
-						{/each}
+							{/each}
+						{/if}
 					</tr>
 				{/each}
 			</tbody>
 		</table>
 	</div>
+{:else}
+	<p>Cannot create Truth Table without Inputs or Outputs.</p>
 {/if}

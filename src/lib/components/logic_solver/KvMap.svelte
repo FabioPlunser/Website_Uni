@@ -3,23 +3,47 @@
 	export let values: boolean[];
 	export let input_names: String[];
 	export let show_position: boolean = false;
+	export let negation_function: (
+		n: number
+	) => [boolean, boolean, boolean, boolean] = (n: number) => {
+		switch (n % 4) {
+			case 0:
+			case 1:
+				return [false, true, false, true];
+			default:
+				return [false, false, true, true];
+		}
+	};
+	export let boolToString: (b: boolean) => string = (b: boolean) => {
+		return b ? "1" : "0";
+	};
 
 	// Output Variables
 	export let packets: boolean[][] = [];
 
 	let num_inputs: number;
-	$: num_inputs = input_names.length;
-	let kv_size: [x: number, y: number];
-	$: kv_size = [1 << ((num_inputs + 1) >> 1), 1 << (num_inputs >> 1)];
+	$: num_inputs = input_names == null ? 0 : input_names.length;
+
+	let kv_size: { x: number; y: number };
+	$: kv_size = { x: 1 << ((num_inputs + 1) >> 1), y: 1 << (num_inputs >> 1) };
 
 	// Map all Minterms to their corresponding KV-Map Index
 	let number_minterms: number[];
-	$: number_minterms = values.filter((x) => x).map((_, i) => i);
+	$: number_minterms =
+		values == null ? [] : values.filter((x) => x).map((_, i) => i);
+
+	let negations: boolean[][];
+	$: negations = Array.from({ length: num_inputs }, (_) => [true]);
+
+	let kv_positions: number[][];
+	$: kv_positions = [];
 
 	let simplified_packets: number[][];
 	$: {
+		if (values == null) break $;
+
 		simplified_packets = number_minterms.map((x) => [x]);
-		let packets_found: number = number_minterms.length;
+		let packets_found: number = num_inputs;
 		let packets_old: number[][] = [];
 		let temp_packets: number[][] = number_minterms.map((x) => [x]);
 
@@ -116,8 +140,8 @@
 	}
 	// Check if array2 is contained in array1
 	function check_for_missing(array1: number[], array2: number[]) {
-		var i, j;
-		var found = 0;
+		let i, j;
+		let found = 0;
 
 		for (j = 0; j < array2.length; j++) {
 			for (i = 0; i < array1.length; i++) {
@@ -134,7 +158,9 @@
 </script>
 
 <table class="table-fixed border-seperate">
-	<tr>
-		<td>Test</td>
-	</tr>
+	{#each { length: kv_size.x } as _, i}
+		<tr>
+			{#each { length: kv_size.y } as _, i}{/each}
+		</tr>
+	{/each}
 </table>
