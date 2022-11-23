@@ -2,10 +2,10 @@
 	import TruthTable from "$components/logic_solver/TruthTable.svelte";
 	import InputSelector from "$components/logic_solver/InputSelector.svelte";
 	import Algebra from "$components/logic_solver/algebra.svelte";
-	import Latextable from "$src/lib/components/logic_solver/LatexTable.svelte";
-	import Latexalgebra from "$src/lib/components/logic_solver/LatexAlgebra.svelte";
+	import Latextable from "$src/lib/components/logic_solver/latextable.svelte";
+	import Latexalgebra from "$src/lib/components/logic_solver/latexalgebra.svelte";
 
-	import Accordion from "$components/ui/accordion.svelte";
+	import Collapse from "$components/ui/collapse.svelte";
 
 	let values: boolean[][];
 	let input_names: String[];
@@ -41,7 +41,7 @@
 
 <main class="w-full h-full overflow-auto justify-center mx-auto text-white">
 	<div class="mx-5 m-2" id="KV-Diagramm">
-		<Accordion title="Truth Table">
+		<Collapse title="Truth Table">
 			<div id="TruthTable" class="mx-auto md:m-0 md:flex">
 				<div class="mx-auto md:m-0">
 					<InputSelector bind:input_names bind:output_names />
@@ -60,10 +60,10 @@
 					/>
 				</div>
 			</div>
-		</Accordion>
+		</Collapse>
 	</div>
 	<div class="mx-5 m-2" id="Algbera">
-		<Accordion title="Algebra">
+		<Collapse title="Algebra">
 			<Algebra
 				{values}
 				{input_names}
@@ -73,13 +73,13 @@
 				bind:LaTexCCNFS
 				bind:LaTexCDNFS
 			/>
-		</Accordion>
+		</Collapse>
 	</div>
 	<div class="mx-5 m-2" id="KV-Diagramm">
-		<Accordion title="KV-Diagramm" />
+		<Collapse title="KV-Diagramm" />
 	</div>
 	<div class="mx-5 m-2" id="Latex Code">
-		<Accordion title="Latex Code">
+		<Collapse title="Latex Code">
 			<div class="mx-auto justify-center">
 				<div class="mx-auto flex justify-center">
 					<Latexalgebra {LaTexCCNFS} {LaTexCDNFS} />
@@ -89,10 +89,10 @@
 					<Latextable {values} {input_names} {output_names} />
 				</div>
 			</div>
-		</Accordion>
+		</Collapse>
 	</div>
 	<div class="mx-5 m-2" id="SVG Circuit">
-		<Accordion title="SVG Circuit" />
+		<Collapse title="SVG Circuit" />
 	</div>
 	<!-- <div class="m-10"> -->
 	<!-- <Algebra {input_names} {output_names} {values} bind:CCNFS bind:CDNFS bind:LaTexCCNFS bind:LaTexCDNFS/> -->
