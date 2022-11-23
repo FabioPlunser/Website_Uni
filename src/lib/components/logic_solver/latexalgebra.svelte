@@ -53,9 +53,11 @@
     }
 </script>
 
-<div id="LatexAlgebra" class="mockup-code">
-    <button on:click={copyToClipboard} type="button" title="Copy Code" class="block ml-auto mr-2 -mt-10 hover:text-gray-600"><i class="text-3xl p-0 m-0 bi bi-file-code-fill"></i></button>
-    <pre class="p-2"><code class="language-tex p-2">{@html highlight}</code></pre>
+<div class="max-w-fit bg-stone-900 p-2 rounded-xl">
+    <button on:click={copyToClipboard} type="button" title="Copy Code" class="block ml-auto mr-2 hover:text-gray-600"><i class="text-3xl p-0 m-0 bi bi-file-code-fill"></i></button>
+    <div class="overflow-auto">
+        <pre class="p-2"><code class="language-tex p-2">{@html highlight}</code></pre>
+    </div>
 </div>
 
 <style>

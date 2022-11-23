@@ -1,6 +1,6 @@
 <script lang="ts">
 	import CourseTable from './courseTable.svelte';
-	import Select from '$components/select.svelte';
+	import Select from '$components/courseSelector/select.svelte';
     let open = false;
     export let title = "";
     export let content = "";

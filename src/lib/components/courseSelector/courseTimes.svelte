@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CourseTable from '$components/courseTable.svelte';
+	import CourseTable from '$components/courseSelector/courseTable.svelte';
     let open = false;
     export let data:any;
 </script>

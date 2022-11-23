@@ -26,6 +26,7 @@
 
 {#if num_inputs > 0 && num_outputs > 0}
 	<div class="flex overflow-x-auto">
+		>>>>>>> origin/dev
 		<table class="table table-zebra table-fixed border-seperate">
 			<thead>
 				<tr>
