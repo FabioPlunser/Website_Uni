@@ -16,7 +16,6 @@
     }
 </script>
 
-
 <!-- <select bind:value={bindto} class="select w-full max-w-xs mx-auto flex justify-center">
     <option disabled selected>{text}</option>       
     {#each data.data as data}

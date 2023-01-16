@@ -3,7 +3,7 @@
 </svelte:head>
 
 <script lang="ts">
-    import {login, logout} from '$lib/helper/fetchAPI';
+    import {login, logout} from '$src/lib/utils/fetchAPI';
     import { error } from "@sveltejs/kit";
 
     let username = '';

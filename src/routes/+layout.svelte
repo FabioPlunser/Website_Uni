@@ -1,6 +1,6 @@
 <script lang="ts">
     import '../app.css';
-    import SideBar from "$src/lib/components/ui/sideBar.svelte";
+    import SideBar from "$src/lib/components/general/sideBar.svelte";
     // import "../app.css";
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Spinner from '$components/courseSelector/spinner.svelte';
-    import { getCourse } from "$lib/helper/fetchAPI";
+    import { getCourse } from "$src/lib/utils/fetchAPI";
     import { selectedCoursesStore } from "$lib/stores/selectedCourses";
 
     export let selectedCourseVarationID = 0;
