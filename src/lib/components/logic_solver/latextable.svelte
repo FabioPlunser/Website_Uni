@@ -1,18 +1,5 @@
 <script lang="ts">
     import { browser } from '$app/environment';
-    import { toastStore } from '@brainandbones/skeleton';
-    import type { ToastSettings } from '@brainandbones/skeleton';
-    function triggerToast(): void {
-        const t: ToastSettings = {
-            message: '👋 Copyed to clipboard',
-            autohide: true,
-            timeout: 2000,
-            classes: 'bg-warning-500',
-        };
-        toastStore.trigger(t);
-    }
-                
-
     import hljs from 'highlight.js';
 
     export let values: boolean[][] = [];

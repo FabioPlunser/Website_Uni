@@ -1,7 +1,5 @@
 <script lang="ts">
     import { browser } from '$app/environment';
-    import { toastStore } from '@brainandbones/skeleton';
-    import type { ToastSettings } from '@brainandbones/skeleton';
     function triggerToast(): void {
         const t: ToastSettings = {
             message: '👋 Copyed to clipboard',

@@ -1,6 +1,5 @@
 <script lang="ts">
     import '../app.css';
-    import { Toast, toastStore } from '@brainandbones/skeleton';
     import SideBar from "$src/lib/components/ui/sideBar.svelte";
     // import "../app.css";
 </script>
