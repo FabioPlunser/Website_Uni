@@ -4,7 +4,7 @@
 </script>
 
 <Nav/>
-<div class="divider"/>
+<div class="divider m-0"/>
 <main class="m-10">
     <slot />
 </main>
