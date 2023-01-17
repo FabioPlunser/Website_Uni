@@ -1,7 +1,8 @@
-interface NavButton {
+interface Nav {
     text: string; 
     href?: string;
-    action?: () => void;
+    icon?: string;
+    children?: Nav[];
 }
 
 export type NavButtons = NavButton[];

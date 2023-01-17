@@ -12,4 +12,7 @@ module.exports = {
     require("flowbite/plugin"),
     require("tailwindcss-textshadow"),
   ],
+  daisyui: {
+    themes: [ "light", "dark" ],
+  },
 };
