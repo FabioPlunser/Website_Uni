@@ -2,7 +2,8 @@
 	import { navStore } from '$stores/navStore';
   import { theme } from "$stores/themeStore";
   import { page } from "$app/stores";
-  import MediaQuery from '$helper/MeidaQuery.svelte';
+  import {slide} from 'svelte/transition';
+  import MediaQuery from '$lib/helper/MediaQuery.svelte';
 
   $: links = $navStore;
   let open = false;
@@ -12,6 +13,7 @@
     {text: "Memori", href: "/memori"},
   ]
 </script>
+
 <nav class="navbar bg-base-100">
   <div class="flex-1">
     <a href="/" class="font-bold btn btn-ghost normal-case text-xl">UIBK-Help</a>
@@ -55,20 +57,21 @@
     {:else}
       <div class="flex-none">
         <div class="menu menu-horizontal px-1">
-          <div class="dropdown">
-            <button on:click="{() => open = !open}" class="translate transition-all btn btn-ghost btn-circle {open ? "rotate-90" : "rotate-0"}">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          <div on:mouseleave={()=>open = false} class="dropdown dropdown-end max-w-none">
+            <button on:click="{() => open = !open}" class="btn btn-ghost btn-circle ">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current translate transition-all {open ? "rotate-90" : "rotate-0"}"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
+
             {#if open}
-              <ul class="menu menu-compact dropdown-content shadow-md bg-base-100 rounded-xl">
+            <div>
+              <ul class="right-0 absolute z-50 p-2 shadow-xl bg-base-300 rounded-box w-max">
                 {#each links as link}
-                  <li>
-                    <a href={link.href}>{link.text}</a>
-                  </li>
+                  <li class="w-full"><a class="w-full" href={link.href}>{link.text}</a></li>
                 {/each}
               </ul>
+            </div>
             {/if}
-          </div>
+          </div>  
           <div tabindex="-1" class="flex items-center">
             <label tabindex="-1" class="swap swap-rotate">
               <input type="checkbox" class="hidden" bind:checked={$theme} />
