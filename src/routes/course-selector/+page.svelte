@@ -6,21 +6,22 @@
     import SearchInput from "$lib/components/general/SearchInput.svelte";
     import Accordion from "$lib/components/general/Accordion.svelte";
     import MediaQuery from "$lib/helper/MediaQuery.svelte";
+    import Modal from "$components/general/Modal.svelte";
+    import Table from "$components/general/Table.svelte"
     import { Step } from "$types/enums";
     
-    export let data: PageData;
-
-
     $: inputData = data.data;
-
-
+    export let data: PageData;
     let selected = Step.FieldOfStudy;
     let groups:any[] = [];
-
-
+    let showGroupsModal = false;
+    let showDetailModal = false;
+    
     async function nextStep(data){
-        // fetch data from server to no expose RUST API
-        let res = await fetch("/api/lfu?step=" + selected + "&id=" + data.detail.id);
+        // fetch data from server to not directly expose RUST API
+        // console.log("selected", data.detail);
+        // if(data.detail.name.includes("Studieneingangs")) selected++;
+        let res = await fetch("/api/lfu?step=" + selected + "&id=" + data?.detail.id);
         res = await res.json();
 
         if(res.success){
@@ -29,15 +30,15 @@
                 groups = res.groups;
             }
             inputData = res.data;
+            if(data?.detail.name.includes("Studieneingangs")) selected++;
             selected++;
-
         }
     }
 
 </script>
 
+
 <section>
-    <!-- <button on:click={()=>{invalidateAll()}} class="btn btn-primary mx-2">Reset</button> -->
     <MediaQuery query="(min-width: 470px)" let:matches>
         {#if matches}
             <div class="flex justify-center mx-auto items-center">
@@ -71,22 +72,33 @@
     </MediaQuery>
 
     {#if selected <= 5}
-        <div class="mt-8 flex justify-center min-w-full">
+        <div class="mt-8 flex justify-center min-w-fit max-w-full">
             <SearchInput on:GET={nextStep} data={inputData}/>
-            <!-- <button on:click={nextStep} class="btn btn-primary mx-2">Next</button> -->
+            <button class="btn btn-primary mx-2" on:click={()=>showDetailModal=true}>Detail</button>
         </div>
     {/if}
+
+    {#if showDetailModal}
+        <Modal open={showDetailModal} on:close={()=> showDetailModal = false}>
+            <div class="max-w-3xl break-all">
+                <Table data={inputData}/>
+            </div>
+        </Modal>
+    {/if}
+
     
     {#if groups.length > 0 && selected != 0}
-    <div class="mt-20">
-        {#each groups as group}
-            <div class="flex justify-center flex-col max-w-full">
-                <Accordion title="Group: {group.number}">
-                    <GroupTable {group} />
-                </Accordion>
-                
+        <button class="btn btn-primary" on:click={()=> showGroupsModal=true}>Show Groups</button>
+        <Modal open={showGroupsModal} on:close={()=> showGroupsModal = false}>
+            <div class="">
+                {#each groups as group}
+                    <div class="flex justify-center flex-col max-w-full m-5">
+                        <!-- <Accordion title="Group: {group.number}"> -->
+                        <GroupTable {group} />
+                        <!-- </Accordion> -->
+                    </div>
+                {/each}
             </div>
-        {/each}
-    </div>
+        </Modal>
     {/if}
 </section>
