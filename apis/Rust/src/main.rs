@@ -7,7 +7,7 @@ use actix_files::{Files, NamedFile};
 use actix_web::http::header;
 use actix_web::{get, web, App, Either, HttpResponse, HttpServer, Responder};
 
-use awc::{error::HttpError, http::Uri, Client};
+use awc::{error::HttpError, http::Uri, Client, cookie::Cookie};
 
 use lazy_static::lazy_static;
 
@@ -18,7 +18,6 @@ use serde::{Serialize, Serializer};
 const PUBLIC_DIR: &str = "./static/dist";
 const LFU_FACULTY_URL: &str = "https://lfuonline.uibk.ac.at/public/lfuonline_lv.home#lv-details";
 
-const LFU_ENGLISH_HEADER: &str = "history.spa.lfuonline.uibk.ac.at=; history.lv.lfuonline.uibk.ac.at=; ict-lb-oracle=orab2; prefer-language=en";
 
 fn format_lfu_object_url(id: usize) -> String {
     format!(
@@ -351,6 +350,7 @@ where
     }
 }
 
+const LFU_ENGLISH_HEADER: &str = " =; =orab2;";
 async fn make_request<U>(url: U) -> Result<String, ()>
 where
     Uri: TryFrom<U>,
@@ -358,7 +358,11 @@ where
 {
     if let Ok(mut response) = Client::default()
         .get(url)
-        .insert_header(("Cookie", LFU_ENGLISH_HEADER))
+        .cookie(Cookie::new("prefer-language", "en"))
+        .cookie(Cookie::new("history.spa.lfuonline.uibk.ac.at", ""))
+        .cookie(Cookie::new("history.lv.lfuonline.uibk.ac.at", ""))
+        .cookie(Cookie::new("ict-lb-oracle", "orab2"))
+        .insert_header(("Accept-Language", "en-US"))
         .send()
         .await
     {
