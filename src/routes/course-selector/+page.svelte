@@ -41,7 +41,7 @@
         {#if matches}
             <div class="flex justify-center mx-auto items-center">
                 <ul class="steps break-all"> 
-                    <li on:click={()=>{selected=0, nextStep(null)}} class="step {selected >= 1 && "step-primary"}">Study</li>
+                    <li on:click={()=>{selected=0, nextStep(null)}} class="step cursor-pointer {selected >= 1 && "step-primary"}">Study</li>
                     <li class="step {selected >= 2 && "step-primary"}">Curriculum</li>
                     <li class="step {selected >= 3 && "step-primary"}">Category</li>
                     <li class="step {selected >= 4 && "step-primary"}">Course</li>
@@ -53,7 +53,7 @@
             <div>
                 <div class="flex justify-center">
                     <ul class="steps break-all"> 
-                        <li on:click={()=>{selected=0, nextStep(null)}} class="step {selected >= 1 && "step-primary"}">Study</li>
+                        <li on:click={()=>{selected=0, nextStep(null)}} class="step cursor-pointer {selected >= 1 && "step-primary"}">Study</li>
                         <li class="step {selected >= 2 && "step-primary"}">Curriculum</li>
                         <li class="step {selected >= 3 && "step-primary"}">Category</li>
                     </ul>  
