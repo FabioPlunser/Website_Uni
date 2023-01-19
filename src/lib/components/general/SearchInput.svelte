@@ -42,7 +42,7 @@
 <svelte:window on:keydown={handleKeydown} />
 
 
-<div class="w-full h-auto max-w-md">
+<div class="w-full h-auto max-w-md" on:mouseleave={()=> open = false}>
     <input on:click={()=>open=true}  type="text" placeholder="search" bind:value={search} class="input w-full bg-base-300 " />
     {#if open}
         <ul transition:slide={{duration: 200}} class="w-full h-auto max-h-64 bg-base-300 rounded-xl shadow-xl mt-1 overflow-y-scroll">

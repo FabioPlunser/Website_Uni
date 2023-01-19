@@ -3,13 +3,13 @@
     import Nav from "$lib/components/general/Nav.svelte";
     import PageTransition from '$lib/components/general/PageTransition.svelte';
     import { page } from "$app/stores"
+    
 </script>
 
 <Nav/>
-<div class="divider m-0"/>
-<main class="m-10">
-    <PageTransition url={$page.url}>
+<div class="divider m-0"/> 
+<PageTransition url={$page.url.pathname}>
+    <main class="m-10">
         <slot />
-    </PageTransition>
-</main>
-
+    </main>
+</PageTransition>
