@@ -18,9 +18,7 @@
     let showDetailModal = false;
     
     async function nextStep(data){
-        // fetch data from server to not directly expose RUST API
-        // console.log("selected", data.detail);
-        // if(data.detail.name.includes("Studieneingangs")) selected++;
+        if(!data) groups = [];
         let res = await fetch("/api/lfu?step=" + selected + "&id=" + data?.detail.id);
         res = await res.json();
 
