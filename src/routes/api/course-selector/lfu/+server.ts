@@ -12,7 +12,7 @@ export const GET = (async ({ params, url }) => {
     if(step == Step.new) {
         urlString = "http://127.0.0.1:3001/lfu";
     }
-    else if(step == Step.FieldOfStudy || step == Step.Curriculum || step == Step.Category || step == Step.Course) {
+    else if(step > 0) {
         console.log("Get lfu/" + id);
         urlString = `http://127.0.0.1:3001/lfu/${id}`;
     }

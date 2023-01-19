@@ -28,7 +28,7 @@
       <tbody>
         {#each group.times as time}
             <tr>
-                <td>{time.date}</td>
+                <td>{dateObj.toLocaleString('de-De', { day: 'numeric',month: 'numeric', year: 'numeric'  })}</td>
                 <td>{time.time}</td>
                 <td>{dateObj.toLocaleString('de-DE', {  weekday: 'short' })}</td>
                 <td>{time.location}</td>

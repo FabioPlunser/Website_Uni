@@ -5,11 +5,12 @@
     import Modal from "$components/general/Modal.svelte";
     import Table from "$components/general/Table.svelte"
     import Spinner from "$components/general/Spinner.svelte";
+    import Accordion from '$lib/components/general/Accordion.svelte';
+    
     import { Step } from "$types/enums";
     import { onMount } from "svelte";
    
     let data: any;
-    $: console.log(data);
     onMount(async () => {
         await initFetch();
     });
@@ -23,29 +24,42 @@
     let groups:any[] = [];
     let showGroupsModal = false;
     let showDetailModal = false;
-    
-    async function nextStep(data){
-        // if(!data) groups = [];
-        // let res = await fetch("/api/lfu?step=" + selected + "&id=" + data?.detail.id);
-        // res = await res.json();
 
-        // if(res.success){
-        //     if(selected == 5){
-        //         console.log(res.groups);
-        //         groups = res.groups;
-        //     }
-        //     inputData = res.data;
-        //     if(data?.detail.name.includes("Studieneingangs")) selected++;
-        //     selected++;
-        // }
+    async function nextStep(dispatchData){
+        if(!dispatchData) groups = [];
+        let url = "";
+        switch (selected) {
+            case Step.FieldOfStudy:
+            case Step.Curriculum:
+            case Step.Category:
+            case Step.Course:
+                url = "/api/course-selector/lfu?step=" + selected + "&id=" + dispatchData?.detail.id;
+                break;
+            case Step.CourseType:
+                url = "/api/course-selector/course?id=" + dispatchData?.detail.id;
+            default:
+                break;
+        }
+        let res = await fetch(url);
+        res = await res.json();
+        
+        if(res.success){
+            console.log("success");
+            if(selected == 5){
+                console.log(res.groups);
+                groups = res.groups;
+            }
+            data = res.data;
+            console.log("data", data);
+            if(dispatchData?.detail.name.includes("Studieneingangs")) selected++;
+            selected++;
+        }
     }
 
 </script>
 
 
 <section>
-    
-
     {#await initFetch()}
         <Spinner/>
     {:then}
@@ -98,12 +112,16 @@
 
         
         {#if groups.length > 0 && selected != 0}
-            <button class="btn btn-primary" on:click={()=> showGroupsModal=true}>Show Groups</button>
-            <Modal open={showGroupsModal} on:close={()=> showGroupsModal = false}>
+            <div class="flex justify-center">
+                <button class="btn btn-primary" on:click={()=> showGroupsModal=true}>Show Groups</button>
+            </div>
+            <Modal open={showGroupsModal} on:close={()=> showGroupsModal = false} closeOnBodyClick={false}>
                 <div class="">
-                    {#each groups as group}
+                    {#each groups as group,i}
                         <div class="flex justify-center flex-col max-w-full m-5">
-                            <GroupTable {group} />
+                            <Accordion title={"Group: " + i}>
+                                <GroupTable {group} />
+                            </Accordion>
                         </div>
                     {/each}
                 </div>
