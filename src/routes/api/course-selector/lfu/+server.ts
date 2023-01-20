@@ -3,25 +3,25 @@ import { json } from '@sveltejs/kit';
 import { error } from '@sveltejs/kit';
 import { Step } from "$types/enums";
 
-export const GET = (async ({ params, url }) => {
+export const GET = (async ({params, url }) => {
     let id = url.searchParams.get("id");
     let step = url.searchParams.get("step");
     id = parseInt(id);
     step = parseInt(step);
-    let urlString = "";
-    if(step == Step.new) {
-        urlString = "http://127.0.0.1:3001/lfu";
+    
+    console.log(`Fetch: id:${id} step:${step}`);
+    let res = null;
+    if(step === 0){
+        res = await fetch("http://127.0.0.1:3001/lfu");
+    }else{
+        res = await fetch(`http://127.0.0.1:3001/lfu/${id}`);
     }
-    else if(step > 0) {
-        console.log("Get lfu/" + id);
-        urlString = `http://127.0.0.1:3001/lfu/${id}`;
-    }
-
-    let res = await fetch(urlString);
     res = await res.json();
     if(res.success) {
         return json(res);
     }else {
-        throw error(404, "Not found");
+        throw error(40, "Not found");
     }
+
+    return json({success: false});
 }) satisfies RequestHandler;

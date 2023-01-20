@@ -1,5 +1,4 @@
 export enum Step {
-    new,
     FieldOfStudy,
     Curriculum,
     Category,
