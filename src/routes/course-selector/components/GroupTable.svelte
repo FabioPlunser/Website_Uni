@@ -22,9 +22,9 @@
         <tbody>
             {#each group?.times as time}
                 <tr>
-                    <td>{time.from.toLocaleString('de-De', { day: 'numeric',month: 'numeric', year: 'numeric'  })}</td>
+                    <td>{new Date(time.from).toLocaleString('de-De', { day: 'numeric',month: 'numeric', year: 'numeric'  })}</td>
                     <td>{time.time}</td>
-                    <td>{time.from.toLocaleString('de-DE', {  weekday: 'short' })}</td>
+                    <td>{new Date(time.from).toLocaleString('de-DE', {  weekday: 'short' })}</td>
                     <td>{time.location}</td>
                     <td>{time.comment}</td>
                 </tr>

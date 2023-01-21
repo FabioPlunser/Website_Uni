@@ -1,4 +1,40 @@
 <script lang="ts">
+    import Calendar from '@event-calendar/core';
+    import TimeGrid from '@event-calendar/time-grid';
+    import { browser } from '$app/environment';
+
+    export let events:any[] = [];
+    $: console.log("calendar", events);
+    let ec;
+    let plugins = [TimeGrid];
+    let options = {
+        view: 'timeGridWeek',
+        eventSources: [{events: function() {
+            console.log('fetching...');
+            return events;
+        }}]
+    };
+
+    $: {
+        if(browser && events.length > 0){
+            invokeMethod();
+            setDateToFirstArray();
+        }
+    }
+
+    function setDateToFirstArray(){
+        ec.setOption('date', new Date(events[0].start));
+    }
+    function invokeMethod() {
+        ec.refetchEvents();
+    }
+
+</script>
+
+<Calendar bind:this={ec} bind:plugins bind:options/>
+
+
+<!-- <script lang="ts">
     let calendarDays = [
         "Monday",
         "Tuesday",
@@ -34,4 +70,4 @@
             {/each}
         </tbody>
     </table>
-</div>
+</div> -->

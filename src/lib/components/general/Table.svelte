@@ -9,7 +9,7 @@
 
 
 <div class="overflow-x-auto rounded-lg">
-    <table class="table table-zebra w-full rounded-lg">
+    <table class="table  table-zebra w-full rounded-lg">
       <thead>
         <tr>
             {#each headings as heading}
@@ -19,9 +19,9 @@
       </thead>
       <tbody>
         {#each data as row}
-            <tr>
+            <tr class="w-full">
                 {#each Object.values(row) as value}
-                    <td class="break-normal">{value}</td>
+                    <td class="break-all"><p class="break-all">{value}</p></td>
                 {/each}
             </tr>
         {/each}

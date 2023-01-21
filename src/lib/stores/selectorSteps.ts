@@ -5,6 +5,7 @@ import { browser } from '$app/environment';
 interface SelectorStep {
     step: Step;
     id: number;
+    [key: string]: any;
 }
 
 type SelectorSteps = SelectorStep[];
@@ -14,12 +15,9 @@ let data = [
     {step: 1, id: 0},
     {step: 2, id: 0},
     {step: 3, id: 0},
-    {step: 4, id: 0},
-    {step: 5, id: 0},
+    {currentStep: 0, id: 0},
 ]
 
-const local = browser ? localStorage.getItem('selectorSteps') : null;
-export const selectorSteps = writable<SelectorSteps>(JSON.parse(local) ||data);
-selectorSteps.subscribe(value => {
-    browser && (localStorage.setItem('selectorSteps', JSON.stringify(value)));
-});
+export const course = writable([]);
+export const groups = writable([]);
+export const selectorSteps = writable<SelectorSteps>(data);

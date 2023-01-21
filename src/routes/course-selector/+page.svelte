@@ -1,102 +1,147 @@
-<script lang="ts">
-
-    
+<script lang="ts">    
     import SearchInput from "$components/general/SearchInput.svelte";
     import Modal from "$components/general/Modal.svelte";
     import Table from "$components/general/Table.svelte"
     import Steps from './components/Steps.svelte';
-    import Calendar from './components/Calendar.svelte';
-
-    import { Step } from "$types/enums";
+    import GroupTable from "./components/GroupTable.svelte";
+    import Spinner from "$components/general/Spinner.svelte";
+    
+    import { selectorSteps, groups } from "$stores/selectorSteps";
+    import { addToast } from "$helper/addToToastStore";
     import { onMount } from "svelte";
-    import { selectorSteps } from '$stores/selectorSteps';
-    import { convertToDate } from "$helper/convertTime";
-  import GroupTable from "./components/GroupTable.svelte";
-   
-    let _selectorSteps = $selectorSteps;
-    let data: any;
-    let selected = Step.FieldOfStudy;
-    let groups:any[] = [];
+    import { slide, fly} from "svelte/transition";
+
     let showGroupModal = false;
     let showDetailModal = false;
     let selectedGroup:any = null;
-
-
-    onMount(async () => {
+    $: selected = $selectorSteps[$selectorSteps.length-1].currentStep;
+    let data = null;
+    
+    onMount(async ()=>{
         await initFetch();
-    });
-    async function initFetch(){
-        let res = await fetch("/api/course-selector/lfu?step=" + Step.FieldOfStudy + "&id=" + 0);
-        res = await res.json();
-        if(res.success){
-            data = res.data;
-        }
-    }
-
-    async function nextStep(dispatchData: any){
-        if(!dispatchData) groups = [];
-        selected++;
-        if(dispatchData?.detail.name.includes("Studies Induction")) selected++;
-        let res = null;
-        data = null;
-        res = await fetch("/api/course-selector/lfu?step=" + selected + "&id=" + dispatchData.detail.id);
-
         
-        if(res){
-            res = await res.json();
-            if(res.success) {
-                console.log("nextStep", res);
-                if(res?.groups){
-                    groups = res.groups;
-                    return;
-                }
-                data = res.data;
-                $selectorSteps[selected].id = dispatchData?.detail.id;
-            }
-        }
-    }
+    })
 
-    async function gotToStep(step: number){
-        let res = await fetch("/api/course-selector/lfu?step=" + step + "&id=" + _selectorSteps[step]?.id || "0");
+    async function initFetch(){
+        let res = await fetch(`/api/course-selector/lfu?step=${selected}&id=${$selectorSteps[selected].id}`);
         res = await res.json();
-        // console.log("gotToStep", res);
-        if(res?.success){
-            data = res.data;
-            selected = step;
-        }
+        data = res?.data;
     }
 
-    $:{
-        for (let group of groups){
-            let times = [];
-            for(let time of group.times){
-                let {from, to} = convertToDate(time);
-                times.push({
-                    from: from,
-                    to: to,
-                    time: time.time,
-                    location: time.location,
-                    comment: time.comment
-                });
+    // $: console.log(data);
+    async function nextStep(dispatchData:any){
+        let _selected = selected;
+        $groups = [];
+        if(selected < 3){
+            data = null;
+            let res = await fetch(`/api/course-selector/lfu?step=${++_selected}&id=${dispatchData?.detail?.id}`);
+            res = await res.json();
+            // console.log(res);
+            if(res?.success){
+                selected++;
+                data = res?.data;
+                $selectorSteps[selected].id = dispatchData?.detail?.id;
+                $selectorSteps[$selectorSteps.length-1].currentStep = selected;
+            }else{
+                addToast(res?.message, "alert-error");
             }
-            group.times = times;
         }
-
-        groups = [...groups];
+        if(selected >= 3){
+            let res = await fetch(`/api/course-selector/lfu?step=${++_selected}&id=${dispatchData?.detail?.id}`);
+            res = await res.json();
+            if(res?.type === "CourseDetails"){
+                // console.log("Get VO and PS groups", res);
+                let _groups = [];
+                let data = res?.data;
+                _selected++;
+                
+                for(let courseType of data){
+                    let res = await fetch(`/api/course-selector/lfu?step=${_selected}&id=${courseType?.id}`);
+                    res = await res.json();
+                    res.course = courseType.name;
+                    _groups.push(res);
+                    $groups = _groups;
+                    // console.log("Groups", res);
+                }
+                selected = 4;
+            }
+        }
     }
+    $: console.log("Groups", $groups);
+    $: console.log("selected", selected);
+
+    $: console.log("Groups length", $groups.length);
+    async function gotToStep(step){
+        selected = step;
+        $selectorSteps[$selectorSteps.length-1].currentStep = step;
+        data = null;
+        await initFetch();
+    }
+
+    async function addGroupToCalendar(group:any){
+        //delete group from $groups 
+        console.log(group);
+        for(let courseType of $groups){
+            courseType.groups = courseType.groups.filter((g:any)=>g.number !== group.number);
+        }
+        $groups = [...$groups];
+    }
+    let groupTableHeaders = [
+        "Group", "Date", "Time", "Location", "Comment", "AddToCalendar", "Details"
+    ]
 </script>
 
 
 <section>
     <Steps bind:selected {gotToStep}/>
-
-    {#if selected <= 5 && groups.length==0}
-        <div class="mt-8 flex justify-center min-w-fit max-w-full">
-            <SearchInput on:GET={nextStep} data={data}/>
-            <button class="btn btn-primary mx-2" on:click={()=>showDetailModal=true}>Detail</button>
-        </div>
+    <div class="mt-8 flex justify-center min-w-fit max-w-full">
+        <SearchInput on:GET={nextStep} bind:data/>
+        <button class="btn btn-primary mx-2" on:click={()=>showDetailModal=true}>Detail</button>
+    </div>
+   
+    <br class="mt-12"/>
+    {#if selected >= 4}
+        {#if $groups.length == 0}
+            <Spinner/>
+        {:else}
+            {#each $groups as groups}
+                <div transition:slide class="mt-8">
+                    <h1 class="text-2xl font-bold">{groups?.course}</h1>
+                    <div class="flex overflow-x-auto bg-base-100">
+                        <table class="table table-compact table-zebra w-full">
+                            <thead>
+                                <tr>
+                                    {#each groupTableHeaders as header}
+                                        <th>{header}</th>
+                                    {/each} 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {#each groups.groups as group}
+                                    {#if group?.times.length < 1}
+                                        <tr>
+                                            <td colspan="7" class="text-center">No Times Found</td>
+                                        </tr>
+                                    {/if}
+                                    <tr transition:slide>
+                                        <td>{group.number}</td>
+                                        <td>{new Date(group?.times[0].from).toLocaleString("de-De", {weekday: 'short'})}:  {new Date(group?.times[0].from).toLocaleString("de-DE", {day: 'numeric', month: 'numeric', year: 'numeric'})}</td>
+                                        <td>{new Date(group?.times[0]?.from).toLocaleString('de-De', { hour: '2-digit', minute: '2-digit'})} - {new Date(group?.times[0]?.to).toLocaleString('de-De', { hour: '2-digit', minute: '2-digit'})} </td>
+                                        <td>{group.times[0].location}</td>
+                                        <td>{group.times[0].comment}</td>
+                                        <td><button class="btn btn-success" on:click={()=> addGroupToCalendar(group)}>Select</button></td>
+                                        <td><button class="btn btn-secondary" on:click={()=>{selectedGroup=group, showGroupModal=true}}>Details</button></td>
+                                    </tr>
+                                {/each}
+                        </table>
+                    </div>
+                    {#if groups?.groups.length < 1}
+                        <div class="text-center font-bold text-xl">No Groups Found</div>
+                    {/if}
+                </div>
+            {/each}
+        {/if}
     {/if}
-
 
     {#if showDetailModal}
         <Modal open={showDetailModal} on:close={()=> showDetailModal = false}>
@@ -104,36 +149,6 @@
                 <Table data={data}/>
             </div>
         </Modal>
-    {/if}
-
-    <br class="mt-12"/>
-    {#if groups.length > 0 && selected != 0}
-        <div class="grid grid-cols-4 gap-2">
-            {#each groups as group, i}
-                <div class="card w-auto bg-primary max-w-xs -rotate-2">
-                    <div class="card w-auto bg-base-300 shadow-xl max-w-xs rotate-2">
-                        <div class="card-body items-center text-center">
-                            <h2 class="card-title">{`Group: ${group.number}`}</h2>
-                            <div class="flex">
-                                <p class="mx-2">{group?.times[0]?.from.toLocaleString("de-De", {weekday: 'short'})} : {group?.times[0]?.from.toLocaleString("de-De", {day: 'numeric', month: 'numeric', year: 'numeric'})}</p>
-                                <p class="mx-2">{group?.times[0]?.from.toLocaleString('de-De', { hour: '2-digit', minute: '2-digit'})} - {group?.times[0]?.to?.toLocaleString('de-De', { hour: '2-digit', minute: '2-digit'})}</p>
-                            </div>
-                            <p>Location: {group.times[0].location}</p>
-                            <p>Comment: {group.times[0].comment}</p>
-                            <div class="card-actions justify-between">
-                                <button class="btn btn-success" on:click={()=>{selectedGroup=group}}>Select</button>
-                                <button class="btn btn-secondary" on:click={()=>{selectedGroup=group, showGroupModal=true}}>Details</button>
-                              </div>
-                        </div>
-
-                    </div>
-                </div>
-            {/each}
-        </div>
-    {:else if selected > 4 && groups.length == 0}
-        <div class="flex justify-center">
-            <h1 class="text-4xl">No Groups found</h1>
-        </div>
     {/if}
 
     {#if showGroupModal}
@@ -144,10 +159,11 @@
         </Modal>
     {/if}
 
-    {#if selected > 4}
+    <br class="mt-12"/>
+    <!-- {#if selected > 4}
         <div class="flex justify-center">
             <Calendar/>
         </div>
-    {/if}
+    {/if} -->
 
 </section>
