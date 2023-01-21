@@ -2,6 +2,7 @@
     import { createEventDispatcher, tick } from 'svelte';
     const dispatch = createEventDispatcher();
     import { slide, fly } from 'svelte/transition'
+    import Spinner from './Spinner.svelte';
 
     export let data: any = null;
     
@@ -15,7 +16,7 @@
         search = "";
     }
 
-    function handleKeydown({ keyCode }) {
+    function handleKeydown({ keyCode }:any) {
         if (keyCode !== 38 && keyCode !== 40) return
 
         const current = document.activeElement
@@ -46,14 +47,20 @@
     <input on:click={()=>open=true}  type="text" placeholder="search" bind:value={search} class="input w-full bg-base-300 " />
     {#if open}
         <ul transition:slide={{duration: 200}} class="w-full h-auto max-h-64 bg-base-300 rounded-xl shadow-xl mt-1 overflow-y-scroll">
-            {#each data as item}
-                {#if item.name.toLowerCase().includes(search.toLowerCase()) }
-                    <!-- svelte-ignore a11y-click-events-have-key-events -->
-                    <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-                    <li tabindex="0" transition:slide|local={{duration: 200}} on:keydown={(e)=>{if(e.key === "Enter") handleClick(item)}} on:click={()=> {handleClick(item)}} class="item px-5 py-1 w-full h-auto hover:bg-gray-400 cursor-pointer rounded-lg break-all focus:bg-gray-400">
-                       {item.name.split("(")[0]}
-                {/if}
-            {/each}
+            {#if !data}
+                <div class="p-4">
+                    <Spinner size="8"/>
+                </div>
+            {:else}
+                {#each data as item}
+                    {#if item.name.toLowerCase().includes(search.toLowerCase()) }
+                        <!-- svelte-ignore a11y-click-events-have-key-events -->
+                        <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+                        <li tabindex="0" transition:slide|local={{duration: 200}} on:keydown={(e)=>{if(e.key === "Enter") handleClick(item)}} on:click={()=> {handleClick(item)}} class="item px-5 py-1 w-full h-auto hover:bg-gray-400 cursor-pointer rounded-lg break-all focus:bg-gray-400">
+                        {item.name.split("(")[0]}
+                    {/if}
+                {/each}
+            {/if}
         </ul>
     {/if}
 </div>

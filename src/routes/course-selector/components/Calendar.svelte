@@ -1,14 +1,20 @@
 <script lang="ts">
-    let calendarDays = 6; 
+    let calendarDays = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+    ]
     let calendarHours = 12;
 </script>
 
 <div class="overflow-auto">
-    <table class="table table-zebra w-full">
+    <table class="table table-zebra w-auto broder-1">
         <thead>
             <tr>
                 <th></th>
-                {#each Array(calendarDays) as _, i}
+                {#each calendarDays as i}
                     <th>{i}</th>
                 {/each}
             </tr>
@@ -16,8 +22,8 @@
         <tbody>
             {#each Array(calendarHours) as _, i}
                 <tr>
-                    <td>{i}</td>
-                    {#each Array(calendarDays) as _, j}
+                    <td>{i+8}:00</td>
+                    {#each Array(calendarDays.length) as _, j}
                         <td></td>
                     {/each}
                 </tr>

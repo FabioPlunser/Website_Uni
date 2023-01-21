@@ -13,6 +13,8 @@ export const GET = (async ({params, url }) => {
     let res = null;
     if(step === 0){
         res = await fetch("http://127.0.0.1:3001/lfu");
+    }else if(step == 5){
+        res = await fetch(`http://127.0.0.1:3001/course/${id}`);
     }else{
         res = await fetch(`http://127.0.0.1:3001/lfu/${id}`);
     }

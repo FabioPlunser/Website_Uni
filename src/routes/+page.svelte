@@ -18,7 +18,7 @@
     </div>
 
     <div class="mt-24 flex flex-col sm:flex-row gap-10 justify-center">
-        <div class="card w-auto bg-green-400 dark:bg-primary shadow-2xl rotate-3 max-w-md">
+        <div class="card w-auto bg-blue-200 dark:bg-primary shadow-2xl rotate-3 max-w-md">
             <div class="card w-auto bg-base-200 shadow text-black dark:text-white -rotate-3">
                 <div class="card-body items-center text-center break-all">
                     <h2 class="card-title">Course Selector <i class="bi bi-calendar2-week"></i> </h2>
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="card w-auto bg-green-400 dark:bg-primary shadow-2xl rotate-3 max-w-md">
+        <div class="card w-auto bg-blue-200 dark:bg-primary shadow-2xl rotate-3 max-w-md">
             <div class="card w-auto bg-base-200 shadow text-black dark:text-white -rotate-3">
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Logic Solver <img src={transistor} alt="logic solver logic" class="w-8 h-auto" /></h2>
@@ -48,8 +48,8 @@
             </div>
         </div>
 
-        <div class="card w-auto bg-green-400 dark:bg-primary shadow-2xl rotate-3 max-w-md">
-            <div class="card w-auto bg-base-200 shadow text-black dark:text-white -rotate-3">
+        <div class="card w-auto bg-blue-200 dark:bg-primary shadow-2xl rotate-3 max-w-md">
+            <div class="card w-auto bg-base-200 shadow-xl text-black dark:text-white -rotate-3">
                 <div class="card-body items-center text-center">
                     <h2 class="card-title">Memori <img src={memori} alt="logic solver logic" class="w-8 h-auto" /></h2>
                     <p>

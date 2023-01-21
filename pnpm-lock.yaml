@@ -1,6 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@event-calendar/core': ^0.15.1
+  '@event-calendar/time-grid': ^0.15.1
   '@sveltejs/adapter-auto': 1.0.1
   '@sveltejs/kit': 1.1.1
   '@tailwindcss/typography': ^0.5.9
@@ -17,6 +19,8 @@ specifiers:
   vite: ^4.0.4
 
 devDependencies:
+  '@event-calendar/core': 0.15.1
+  '@event-calendar/time-grid': 0.15.1
   '@sveltejs/adapter-auto': 1.0.1_@sveltejs+kit@1.1.1
   '@sveltejs/kit': 1.1.1_svelte@3.55.1+vite@4.0.4
   '@tailwindcss/typography': 0.5.9_tailwindcss@3.2.4
@@ -231,6 +235,26 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@event-calendar/common/0.15.1:
+    resolution: {integrity: sha512-NCnX308ZZIhz70IlsCeaNXxZEnDeFbY9HMl8jQQr9r09VFsQzBc9wZSM4pn/5hpIJ6cj8TqUFhuwHR6DlK9dWg==}
+    dependencies:
+      svelte: 3.55.1
+    dev: true
+
+  /@event-calendar/core/0.15.1:
+    resolution: {integrity: sha512-ElWMbTSNUY/HWHE4psA1UflLtJ7JAAJw18w2SpCkZm38jYaHE8aG9NRbHhx/OlIkTDaXooFcx/uAAMbPGitNpQ==}
+    dependencies:
+      '@event-calendar/common': 0.15.1
+      svelte: 3.55.1
+    dev: true
+
+  /@event-calendar/time-grid/0.15.1:
+    resolution: {integrity: sha512-iHq/SL182gZ3T5HwF338ubD4Y7YCopMegn82TWqo6PtLb2vgeCyOaDQqR1TqsVN9FUTQ7PI6nPNxPzTyIhltGQ==}
+    dependencies:
+      '@event-calendar/common': 0.15.1
+      svelte: 3.55.1
+    dev: true
 
   /@fullhuman/postcss-purgecss/2.3.0:
     resolution: {integrity: sha512-qnKm5dIOyPGJ70kPZ5jiz0I9foVOic0j+cOzNDoo8KoCf6HjicIZ99UfO2OmE7vCYSKAAepEwJtNzpiiZAh9xw==}
