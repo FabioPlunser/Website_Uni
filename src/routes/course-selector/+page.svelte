@@ -11,13 +11,15 @@
     import { onMount } from "svelte";
     import { selectorSteps } from '$stores/selectorSteps';
     import { convertToDate } from "$helper/convertTime";
+  import GroupTable from "./components/GroupTable.svelte";
    
     let _selectorSteps = $selectorSteps;
     let data: any;
     let selected = Step.FieldOfStudy;
     let groups:any[] = [];
-    let showGroupsModal = false;
+    let showGroupModal = false;
     let showDetailModal = false;
+    let selectedGroup:any = null;
 
 
     onMount(async () => {
@@ -31,12 +33,10 @@
         }
     }
 
-//    $: console.log("data", data);
-//    $: console.log("groups", groups);
-
     async function nextStep(dispatchData: any){
         if(!dispatchData) groups = [];
         selected++;
+        if(dispatchData?.detail.name.includes("Studies Induction")) selected++;
         let res = null;
         data = null;
         res = await fetch("/api/course-selector/lfu?step=" + selected + "&id=" + dispatchData.detail.id);
@@ -51,7 +51,6 @@
                     return;
                 }
                 data = res.data;
-                if(dispatchData?.detail.name.includes("Studies Introduction")) selected++;
                 $selectorSteps[selected].id = dispatchData?.detail.id;
             }
         }
@@ -85,9 +84,6 @@
 
         groups = [...groups];
     }
-
-    $: console.log("groups", groups);
-    // $: console.log("testing", groups[0].times[0].from.toLocaleString('de-De', { day: 'numeric', month: 'numeric', year: 'numeric' }));
 </script>
 
 
@@ -125,8 +121,8 @@
                             <p>Location: {group.times[0].location}</p>
                             <p>Comment: {group.times[0].comment}</p>
                             <div class="card-actions justify-between">
-                                <button class="btn btn-success">Select</button>
-                                <button class="btn btn-secondary">Details</button>
+                                <button class="btn btn-success" on:click={()=>{selectedGroup=group}}>Select</button>
+                                <button class="btn btn-secondary" on:click={()=>{selectedGroup=group, showGroupModal=true}}>Details</button>
                               </div>
                         </div>
 
@@ -134,10 +130,24 @@
                 </div>
             {/each}
         </div>
+    {:else if selected > 4 && groups.length == 0}
+        <div class="flex justify-center">
+            <h1 class="text-4xl">No Groups found</h1>
+        </div>
     {/if}
 
-    <div class="flex justify-center">
-        <Calendar/>
-    </div>
+    {#if showGroupModal}
+        <Modal open={showGroupModal} on:close={()=> showGroupModal = false}>
+            <div class="max-w-3xl break-all">
+                <GroupTable group={selectedGroup}/>
+            </div>
+        </Modal>
+    {/if}
+
+    {#if selected > 4}
+        <div class="flex justify-center">
+            <Calendar/>
+        </div>
+    {/if}
 
 </section>

@@ -6,7 +6,7 @@
         "Thursday",
         "Friday"
     ]
-    let calendarHours = 12;
+    let calendarHours = 16;
 </script>
 
 <div class="overflow-auto">
@@ -22,7 +22,11 @@
         <tbody>
             {#each Array(calendarHours) as _, i}
                 <tr>
-                    <td>{i+8}:00</td>
+                    {#if (i+6) < 10}
+                        <td>0{i+6}:00</td>
+                    {:else}
+                        <td>{i+6}:00</td>
+                    {/if}
                     {#each Array(calendarDays.length) as _, j}
                         <td></td>
                     {/each}

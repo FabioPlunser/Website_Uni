@@ -49,7 +49,7 @@
         <ul transition:slide={{duration: 200}} class="w-full h-auto max-h-64 bg-base-300 rounded-xl shadow-xl mt-1 overflow-y-scroll">
             {#if !data}
                 <div class="p-4">
-                    <Spinner size="8"/>
+                    <Spinner size={"8"}/>
                 </div>
             {:else}
                 {#each data as item}
