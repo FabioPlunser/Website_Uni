@@ -21,7 +21,7 @@
     <div class="mt-24 grid grid-cols-3 sm:grid-rows gap-10 justify-center">
 
         <IndexCards>
-            <h2 class="card-title">Course Selector <i class="bi bi-calendar-range-fill"></i> </h2>
+            <h2 class="card-title">Course Selector <i class="bi bi-calendar2-week"></i> </h2>
                     
             <p>
                 A site to add courses to a simple Calendar to see if courses clash with each other 

@@ -28,7 +28,6 @@
         data = res?.data;
     }
 
-    // $: console.log(data);
     async function nextStep(dispatchData:any){
         let _selected = selected;
         $groups = [];
@@ -47,16 +46,15 @@
             }
         }
         if(selected >= 3){
-            let res = await fetch(`/api/course-selector/lfu?step=${++_selected}&id=${dispatchData?.detail?.id}`);
+            console.log(_selected);
+            let res = await fetch(`/api/course-selector/lfu?step=${_selected}&id=${dispatchData?.detail?.id}`);
             res = await res.json();
             if(res?.type === "CourseDetails"){
                 // console.log("Get VO and PS groups", res);
                 let _groups = [];
                 let data = res?.data;
-                _selected++;
-                
                 for(let courseType of data){
-                    let res = await fetch(`/api/course-selector/lfu?step=${_selected}&id=${courseType?.id}`);
+                    let res = await fetch(`/api/course-selector/lfu?step=5&id=${courseType?.id}`);
                     res = await res.json();
                     res.course = courseType.name;
                     _groups.push(res);
@@ -67,10 +65,8 @@
             }
         }
     }
-    $: console.log("Groups", $groups);
     $: console.log("selected", selected);
 
-    $: console.log("Groups length", $groups.length);
     async function gotToStep(step){
         selected = step;
         $selectorSteps[$selectorSteps.length-1].currentStep = step;
@@ -92,7 +88,7 @@
 </script>
 
 
-<section>
+<section class="z-0">
     <Steps bind:selected {gotToStep}/>
     <div class="mt-8 flex justify-center min-w-fit max-w-full">
         <SearchInput on:GET={nextStep} bind:data/>
