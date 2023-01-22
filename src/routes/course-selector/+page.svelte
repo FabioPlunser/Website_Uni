@@ -5,7 +5,8 @@
     import Steps from './components/Steps.svelte';
     import GroupTable from "./components/GroupTable.svelte";
     import Spinner from "$components/general/Spinner.svelte";
-    
+    import MyCalendar from "./components/MyCalendar.svelte";
+
     import { selectorSteps, groups } from "$stores/selectorSteps";
     import { addToast } from "$helper/addToToastStore";
     import { onMount } from "svelte";
@@ -13,6 +14,7 @@
 
     let showGroupModal = false;
     let showDetailModal = false;
+    let showGroups = true;
     let selectedGroup:any = null;
     $: selected = $selectorSteps[$selectorSteps.length-1].currentStep;
     let data = null;
@@ -46,11 +48,9 @@
             }
         }
         if(selected >= 3){
-            console.log(_selected);
             let res = await fetch(`/api/course-selector/lfu?step=${_selected}&id=${dispatchData?.detail?.id}`);
             res = await res.json();
             if(res?.type === "CourseDetails"){
-                // console.log("Get VO and PS groups", res);
                 let _groups = [];
                 let data = res?.data;
                 for(let courseType of data){
@@ -59,13 +59,11 @@
                     res.course = courseType.name;
                     _groups.push(res);
                     $groups = _groups;
-                    // console.log("Groups", res);
                 }
                 selected = 4;
             }
         }
     }
-    $: console.log("selected", selected);
 
     async function gotToStep(step){
         selected = step;
@@ -97,6 +95,14 @@
    
     <br class="mt-12"/>
     {#if selected >= 4}
+        <div class="flex justify-center">
+            <label class="flex items-center">
+                <span class="text-lg font-bold flex">Show Groups: </span>
+                <input type="checkbox" class="toggle checkbox-primary flex items-center mx-2" bind:checked={showGroups}/>
+            </label>
+        </div>
+    {/if}
+    {#if selected >= 4 && showGroups}
         {#if $groups.length == 0}
             <Spinner/>
         {:else}
@@ -161,5 +167,8 @@
             <Calendar/>
         </div>
     {/if} -->
+    <div class="flex justify-center">
+        <MyCalendar/>
+    </div>
 
 </section>
