@@ -6,7 +6,7 @@
     import GroupTable from "./components/GroupTable.svelte";
     import Spinner from "$components/general/Spinner.svelte";
     import MyCalendar from "./components/MyCalendar.svelte";
-
+    import Calendar from "./components/Calendar.svelte";
     import { selectorSteps, groups } from "$stores/selectorSteps";
     import { addToast } from "$helper/addToToastStore";
     import { onMount } from "svelte";
@@ -17,6 +17,7 @@
     let showGroups = true;
     let selectedGroup:any = null;
     $: selected = $selectorSteps[$selectorSteps.length-1].currentStep;
+    let events:any[] = [];
     let data = null;
     
     onMount(async ()=>{
@@ -79,6 +80,21 @@
             courseType.groups = courseType.groups.filter((g:any)=>g.number !== group.number);
         }
         $groups = [...$groups];
+
+        let dateObj = new Date(group?.times[0].from);
+        let to = new Date(group?.times[0].to); 
+        let time = dateObj.toLocaleString("de-De", {hour: '2-digit', minute: '2-digit'});
+        let day = dateObj.toLocaleString("de-De", {weekday: 'long'});
+        let duration = Math.round((to.getTime() - dateObj.getTime()) / 60000 / 60);
+
+        let event = {
+            day: day,
+            time: time,
+            name: "Group: " + group.number,
+            duration: duration,
+        }
+        console.log(event);
+        events = [...events, event];
     }
     let groupTableHeaders = [
         "Group", "Date", "Time", "Location", "Comment", "AddToCalendar", "Details"
@@ -162,13 +178,15 @@
     {/if}
 
     <br class="mt-12"/>
-    <!-- {#if selected > 4}
-        <div class="flex justify-center">
+    {#if selected >= 4}
+        <MyCalendar bind:events/>
+    {/if}
+    <!-- {#if selected > 4} -->
+        <!-- <div class="">
             <Calendar/>
-        </div>
-    {/if} -->
-    <div class="flex justify-center">
-        <MyCalendar/>
-    </div>
+        </div> -->
+    <!-- {/if} -->
+    <!-- <div class="flex justify-center">
+    </div> -->
 
 </section>
