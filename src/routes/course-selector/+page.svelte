@@ -73,32 +73,56 @@
         await initFetch();
     }
 
-    async function addGroupToCalendar(group:any){
+    async function addGroupToCalendar(group:any, course: any){
         //delete group from $groups 
-        console.log(group);
-        for(let courseType of $groups){
-            courseType.groups = courseType.groups.filter((g:any)=>g.number !== group.number);
-        }
-        $groups = [...$groups];
+        // for(let courseType of $groups){
+        //     courseType.groups = courseType.groups.filter((g:any)=>g.number !== group.number);
+        // }
+        // $groups = [...$groups];
 
-        let dateObj = new Date(group?.times[0].from);
-        let to = new Date(group?.times[0].to); 
-        let time = dateObj.toLocaleString("de-De", {hour: '2-digit', minute: '2-digit'});
-        let day = dateObj.toLocaleString("de-De", {weekday: 'long'});
-        let duration = Math.round((to.getTime() - dateObj.getTime()) / 60000 / 60);
+        for (let time of group?.times)
+        {
+            let event = {
+                title: course.course + ":" + group.number,
+                start: time.from,
+                end: time.to,
+            }  
 
-        let event = {
-            day: day,
-            time: time,
-            name: "Group: " + group.number,
-            duration: duration,
+            //check if event is already in events
+            let isAlreadyInEvent = false;
+            for(let e of events){
+                if(e.title === event.title && e.start === event.start && e.end === event.end){
+                    isAlreadyInEvent = true;
+                    break;
+                }
+            }
+            if(isAlreadyInEvent){
+                addToast("Event already in calendar", "alert-error");
+            }else{
+                events = [...events, event];
+            }
         }
-        console.log(event);
-        events = [...events, event];
+
+        
+        //if events have same time set background color to red
+        events = events.map((event:any)=>{
+            let count = 0;
+            for(let e of events){
+                if(e.start === event.start && e.end === event.end){
+                    count++;
+                }
+            }
+            if(count > 1){
+                event.backgroundColor = "red";
+            }
+            return event;
+        })
+
     }
     let groupTableHeaders = [
         "Group", "Date", "Time", "Location", "Comment", "AddToCalendar", "Details"
     ]
+    $: console.log(events);
 </script>
 
 
@@ -147,7 +171,7 @@
                                         <td>{new Date(group?.times[0]?.from).toLocaleString('de-De', { hour: '2-digit', minute: '2-digit'})} - {new Date(group?.times[0]?.to).toLocaleString('de-De', { hour: '2-digit', minute: '2-digit'})} </td>
                                         <td>{group.times[0].location}</td>
                                         <td>{group.times[0].comment}</td>
-                                        <td><button class="btn btn-success" on:click={()=> addGroupToCalendar(group)}>Select</button></td>
+                                        <td><button class="btn btn-success" on:click={()=> addGroupToCalendar(group, groups)}>Select</button></td>
                                         <td><button class="btn btn-secondary" on:click={()=>{selectedGroup=group, showGroupModal=true}}>Details</button></td>
                                     </tr>
                                 {/each}
@@ -179,14 +203,8 @@
 
     <br class="mt-12"/>
     {#if selected >= 4}
-        <MyCalendar bind:events/>
+        <Calendar bind:events />
     {/if}
-    <!-- {#if selected > 4} -->
-        <!-- <div class="">
-            <Calendar/>
-        </div> -->
-    <!-- {/if} -->
-    <!-- <div class="flex justify-center">
-    </div> -->
+
 
 </section>
