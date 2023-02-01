@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
     let dispatch = createEventDispatcher();
     import { browser } from '$app/environment';
@@ -86,10 +86,10 @@
 <div class="flex justify-center">
     <button class="flex justify-center btn btn-primary " on:click={()=>clearCalendar()}>Clear Calendar</button>
 </div>
-<Calendar bind:this={ec} bind:plugins bind:options on:dateClick={handleDelete} on:click={()=>console.log("click")}/>
+<!-- <Calendar bind:this={ec} bind:plugins bind:options on:dateClick={handleDelete} on:click={()=>console.log("click")}/> -->
 
 
-{#if showEvent}
+<!-- {#if showEvent}
     <Modal open={showEvent} on:close={()=>showEvent = false}>
         <h1 class="flex justify-center text-2xl font-bold">Group: {group.number}</h1>
         <div class="p-4">
@@ -100,4 +100,4 @@
             <button class="btn btn-primary" on:click={()=>handleDelete(ModalInfo)}>Delete Event</button>
         </div>
     </Modal>
-{/if}
+{/if} --> -->

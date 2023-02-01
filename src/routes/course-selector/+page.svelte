@@ -134,15 +134,15 @@
     </div>
    
     <br class="mt-12"/>
-    {#if selected >= 4}
+    <!-- {#if selected >= 4}
         <div class="flex justify-center">
             <label class="flex items-center">
                 <span class="text-lg font-bold flex">Show Groups: </span>
                 <input type="checkbox" class="toggle checkbox-primary flex items-center mx-2" bind:checked={showGroups}/>
             </label>
         </div>
-    {/if}
-    {#if selected >= 4 && showGroups}
+    {/if} -->
+    <!-- {#if selected >= 4 && showGroups}
         {#if $groups.length == 0}
             <Spinner/>
         {:else}
@@ -183,7 +183,7 @@
                 </div>
             {/each}
         {/if}
-    {/if}
+    {/if} -->
 
     {#if showDetailModal}
         <Modal open={showDetailModal} on:close={()=> showDetailModal = false}>
@@ -193,18 +193,18 @@
         </Modal>
     {/if}
 
-    {#if showGroupModal}
+    <!-- {#if showGroupModal}
         <Modal open={showGroupModal} on:close={()=> showGroupModal = false}>
             <div class="max-w-3xl break-all">
                 <GroupTable group={selectedGroup}/>
             </div>
         </Modal>
-    {/if}
+    {/if} -->
 
-    <br class="mt-12"/>
+    <!-- <br class="mt-12"/>
     {#if selected >= 4}
         <Calendar bind:events />
-    {/if}
+    {/if} -->
 
 
 </section>

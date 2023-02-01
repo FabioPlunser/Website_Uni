@@ -19,18 +19,15 @@
     </div>
     
     <div class="mt-24 grid grid-cols-3 sm:grid-rows gap-10 justify-center">
-        <div class="opacity-50">
             <IndexCards>
                 <h2 class="card-title">Course Selector <i class="bi bi-calendar2-week"></i> </h2>
-                <h1 class="text-3xl">Under development</h1>
-                <!-- <p>
+                <p>
                     A site to add courses to a simple Calendar to see if courses clash with each other 
                 </p>
                 <div class="card-actions justify-end">
                     <a href="/course-selector" class="btn btn-primary">Go</a>
-                </div> -->
+                </div>
             </IndexCards>
-        </div>
 
        <div class="opacity-50">
             <IndexCards>
