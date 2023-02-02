@@ -39,7 +39,7 @@
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-missing-attribute -->
                 <button class="cursor-pointer" on:click={()=>download(f)}>
-                    <div class="flex p-2 hover:bg-base-300 rounded-xl">
+                    <div class="flex p-2 hover:bg-base-300 rounded-xl w-full">
                         <i class="text-6xl bi bi-file-earmark-medical"></i>
                         <h1 class="flex items-center">{f}</h1>
                     </div>
@@ -49,7 +49,7 @@
         </div>
     {/if}
     {#if $filesLayoutStore==="list"}
-        <div class="grid grid-rows">
+        <div class="grid grid-rows w-full">
             {#each data.folders as f}
                 <div>
                     <a href="{$page.url.pathname}/{f}">
@@ -62,11 +62,11 @@
             {/each} 
 
             {#each data.files as f}
-            <div>
+            <div class="w-full">
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-missing-attribute -->
                 <button class="cursor-pointer" on:click={()=>download(f)}>
-                    <div class="flex p-2 hover:bg-base-300 rounded-xl">
+                    <div class="flex p-2 hover:bg-base-300 rounded-xl w-full">
                         <i class="text-3xl bi bi-file-earmark-medical"></i>
                         <h1 class="flex items-center">{f}</h1>
                     </div>

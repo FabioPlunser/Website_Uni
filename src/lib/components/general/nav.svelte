@@ -10,6 +10,7 @@
   let open = false;
   $navStore = [
     {text: "Course Selector", href: "/course-selector"},
+    {text: "Files", href: "/files"},
     {text: "Logic Solver", href: "/logic-solver"},
     {text: "Memori", href: "/memori"},
   ]

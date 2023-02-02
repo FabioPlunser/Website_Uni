@@ -29,6 +29,16 @@
                 </div>
             </IndexCards>
 
+            <IndexCards>
+                <h2 class="card-title">Files <i class="bi bi-archive-fill w-8 h-auto"></i></h2>
+                <p>
+                    Here you can find some files that are useful for students. 
+                </p>
+                <div class="card-actions justify-end">
+                    <a href="/files" class="btn btn-primary">Go</a>
+                </div>
+            </IndexCards>
+
        <div class="opacity-50">
             <IndexCards>
                 <h2 class="card-title">Logic Solver <img src={transistor} alt="logic solver logic" class="w-8 h-auto" /></h2>
@@ -70,16 +80,7 @@
             </IndexCards>
         </div>
 
-        <IndexCards>
-            <h2 class="card-title">Files <i class="bi bi-archive-fill w-8 h-auto"></i></h2>
-            <p>
-                Here you can find some files that are useful for students. 
-                For example some templates for latex or some proseminar homework.
-            </p>
-            <div class="card-actions justify-end">
-                <a href="/files" class="btn btn-primary">Go</a>
-            </div>
-        </IndexCards>
+        
 
         
     </div>

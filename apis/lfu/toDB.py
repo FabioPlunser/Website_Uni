@@ -45,48 +45,48 @@ def createTables():
 def studies():
     res = requests.get("http://127.0.0.1:3001/lfu")
     studies = json.loads(res.text)
-    print(bcolors.OKGREEN + tabulate(studies["data"]) + bcolors.ENDC)
+    print(bcolors.OKGREEN + tabulate(studies.get("data")) + bcolors.ENDC)
     for study in studies.get("data"): 
         print(bcolors.OKGREEN + json.dumps(study, indent=4) + bcolors.ENDC)
         cur.execute("INSERT INTO studies VALUES (?, ?)", (study.get("id"), study.get("name")))
         con.commit()
-        curricula(study["id"])
+        curricula(study.get("id"))
     
 def curricula(id):
     res = requests.get(f"http://127.0.0.1:3001/lfu/{id}")
     curricula = json.loads(res.text)
-    print(bcolors.OKBLUE + tabulate(curricula["data"]) + bcolors.ENDC)
-    for curriculum in curricula["data"]:
+    print(bcolors.OKBLUE + tabulate(curricula.get("data")) + bcolors.ENDC)
+    for curriculum in curricula.get("data"):
         try:
             cur.execute("INSERT INTO curriculum VALUES (?, ?, ?)", (id, curriculum.get("id"), curriculum.get("name")))
             con.commit()
         except Exception as e: 
             print(e)
             print(bcolors.FAIL + "curricula: \n" + json.dumps(curriculum, indent=4) + bcolors.ENDC)
-        categories(curriculum["id"])
+        categories(curriculum.get("id"))
 
 def categories(id):
     res = requests.get(f"http://127.0.0.1:3001/lfu/{id}")
     categories = json.loads(res.text)
-    print(bcolors.OKCYAN + tabulate(categories["data"]) + bcolors.ENDC)
-    if(categories["success"]):
-        for category in categories["data"]:
+    print(bcolors.OKCYAN + tabulate(categories.get("data")) + bcolors.ENDC)
+    if(categories.get("success")):
+        for category in categories.get("data"):
             try:
                 cur.execute("INSERT INTO category VALUES (?, ?, ?)", (id, category.get("id"), category.get("name")))
                 con.commit()
             except Exception as e: 
                 print(e)
                 print(bcolors.FAIL + "categories: \n" + json.dumps(category, indent=4) + bcolors.ENDC)
-            courses(category["id"])
+            courses(category.get("id"))
 
 
 def courses(id):
     res = requests.get(f"http://127.0.0.1:3001/lfu/{id}")
     courses = json.loads(res.text)
-    # print(bcolors.MAGENTA + tabulate(courses["data"]) + bcolors.ENDC)
-    if(courses["success"]):
-        jsonType = courses["type"]
-        for course in courses["data"]:
+    # print(bcolors.MAGENTA + tabulate(courses.get("data")) + bcolors.ENDC)
+    if(courses.get("success")):
+        jsonType = courses.get("type")
+        for course in courses.get("data"):
             try:
                 cur.execute("INSERT INTO course VALUES (?, ?, ?)", (id, course.get("id"), course.get("name")))
                 con.commit()
@@ -94,16 +94,16 @@ def courses(id):
                 print(e)
                 print(bcolors.FAIL + "courses: \n" + json.dumps(course, indent=4) + bcolors.ENDC)
             if jsonType == "CourseDetails":
-                groups(course["id"])
+                groups(course.get("id"))
             else:
-                courseTypes(course["id"])
+                courseTypes(course.get("id"))
 
 def courseTypes(id):
     res = requests.get(f"http://127.0.0.1:3001/lfu/{id}")
     courseTypes = json.loads(res.text)
-    # print(bcolors.WARNING + tabulate(courses["data"]) + bcolors.ENDC)
-    if(courseTypes["success"]):
-        for courseType in courseTypes["data"]:
+    # print(bcolors.WARNING + tabulate(courses.get("data") + bcolors.ENDC)
+    if(courseTypes.get("success")):
+        for courseType in courseTypes.get("data"):
             try:
                 cur.execute("INSERT INTO courseType VALUES (?, ?, ?, ?)", (id, courseType.get("id"), courseType.get("name"), courseType.get("lectures")))
                 con.commit()
@@ -111,14 +111,14 @@ def courseTypes(id):
                 print(e)
                 print(bcolors.FAIL + "courseTypes: \n" + json.dumps(courseType, indent=4) + bcolors.ENDC)
 
-            groups(courseType["id"])
+            groups(courseType.get("id"))
 
 def groups(id):
     res = requests.get(f"http://127.0.0.1:3001/course/{id}")
     groups = json.loads(res.text)
 
-    if(groups["success"]):
-        for group in groups["groups"]:
+    if(groups.get("success")):
+        for group in groups.get("groups"):
             print(colors[id%5])
             print(id, groups["id"])
             print(tabulate(group["times"]))

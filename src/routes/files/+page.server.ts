@@ -10,11 +10,9 @@ async function getDirectories(path) {
 
 export const load = (async ({ url }) => {
     let data = await getDirectories(url);
-    console.log(data);
     let folders = [];
     for (let folder of data) {
         if (folder.isDirectory()) {
-            console.log(folder.name);
             folders.push(folder.name);
         }
     }
