@@ -46,9 +46,9 @@ def studies():
     res = requests.get("http://127.0.0.1:3001/lfu")
     studies = json.loads(res.text)
     print(bcolors.OKGREEN + tabulate(studies["data"]) + bcolors.ENDC)
-    for study in studies["data"]: 
+    for study in studies.get("data"): 
         print(bcolors.OKGREEN + json.dumps(study, indent=4) + bcolors.ENDC)
-        cur.execute("INSERT INTO studies VALUES (?, ?)", (study["id"], study["name"]))
+        cur.execute("INSERT INTO studies VALUES (?, ?)", (study.get("id"), study.get("name")))
         con.commit()
         curricula(study["id"])
     
@@ -58,7 +58,7 @@ def curricula(id):
     print(bcolors.OKBLUE + tabulate(curricula["data"]) + bcolors.ENDC)
     for curriculum in curricula["data"]:
         try:
-            cur.execute("INSERT INTO curriculum VALUES (?, ?, ?)", (id, curriculum["id"], curriculum["name"]))
+            cur.execute("INSERT INTO curriculum VALUES (?, ?, ?)", (id, curriculum.get("id"), curriculum.get("name")))
             con.commit()
         except Exception as e: 
             print(e)
@@ -72,7 +72,7 @@ def categories(id):
     if(categories["success"]):
         for category in categories["data"]:
             try:
-                cur.execute("INSERT INTO category VALUES (?, ?, ?)", (id, category["id"], category["name"]))
+                cur.execute("INSERT INTO category VALUES (?, ?, ?)", (id, category.get("id"), category.get("name")))
                 con.commit()
             except Exception as e: 
                 print(e)
@@ -88,7 +88,7 @@ def courses(id):
         jsonType = courses["type"]
         for course in courses["data"]:
             try:
-                cur.execute("INSERT INTO course VALUES (?, ?, ?)", (id, course["id"], course["name"]))
+                cur.execute("INSERT INTO course VALUES (?, ?, ?)", (id, course.get("id"), course.get("name")))
                 con.commit()
             except Exception as e: 
                 print(e)
@@ -105,7 +105,7 @@ def courseTypes(id):
     if(courseTypes["success"]):
         for courseType in courseTypes["data"]:
             try:
-                cur.execute("INSERT INTO courseType VALUES (?, ?, ?, ?)", (id, courseType["id"], courseType["name"], courseType.get("lectures")))
+                cur.execute("INSERT INTO courseType VALUES (?, ?, ?, ?)", (id, courseType.get("id"), courseType.get("name"), courseType.get("lectures")))
                 con.commit()
             except Exception as e: 
                 print(e)
@@ -125,7 +125,7 @@ def groups(id):
             print(bcolors.ENDC)
 
             try:
-                cur.execute("INSERT INTO groups VALUES (?, ?, ?, ?, ?)", (id, groups["id"], group["number"], json.dumps(group["times"]), f"{uuid.uuid4()}"))
+                cur.execute("INSERT INTO groups VALUES (?, ?, ?, ?, ?)", (id, groups.get("id"), group.get("number"), json.dumps(group.get("times")), f"{uuid.uuid4()}"))
                 con.commit()
             except Exception as e: 
                 print(e)

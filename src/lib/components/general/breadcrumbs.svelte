@@ -6,7 +6,7 @@
     crumbs = [...crumbs];
 </script>
 
-<div class="breadcrumbs">
+<div class="font-bold breadcrumbs">
     <ul>
         {#each crumbs as crumb, i}
             {#if crumb.includes(".")}
