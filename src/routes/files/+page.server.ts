@@ -4,8 +4,10 @@ import { resolve } from 'path';
 
 
 async function getDirectories(path) {
-    return await fs.promises.readdir(resolve("."+path.pathname), { withFileTypes: true });
+    //remove first param from pathname
+    return await fs.promises.readdir(resolve("./fileSharing"), { withFileTypes: true });
 }
+
 export const load = (async ({ url }) => {
     let data = await getDirectories(url);
     console.log(data);

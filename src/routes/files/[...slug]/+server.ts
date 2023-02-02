@@ -4,7 +4,9 @@ import fs from "fs";
 import { resolve } from 'path';
 
 export const GET = (async (event) => {
-    const filePath = resolve("."+event.url.pathname);
+    let path = event.url.pathname;
+    path = path.split("/").slice(2).join("/");
+    const filePath = resolve("./fileSharing/" + path);
     const fileExtension = filePath.split(".").pop();
     var file = fs.readFileSync(filePath);
 
