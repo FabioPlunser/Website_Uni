@@ -5,7 +5,11 @@
 </script>
   
 {#key url}
-  <div in:fly={{y: -50, duration: 300}} >
-    <slot />
-  </div>
+  {#if url.includes("files")}
+      <slot />
+  {:else}
+    <div in:fly={{y: -50, duration: 300}} >
+      <slot />
+    </div>
+  {/if}
 {/key}

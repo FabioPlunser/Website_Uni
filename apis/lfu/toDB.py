@@ -105,7 +105,7 @@ def courseTypes(id):
     if(courseTypes["success"]):
         for courseType in courseTypes["data"]:
             try:
-                cur.execute("INSERT INTO courseType VALUES (?, ?, ?, ?)", (id, courseType["id"], courseType["name"], courseType["lecturers"]))
+                cur.execute("INSERT INTO courseType VALUES (?, ?, ?, ?)", (id, courseType["id"], courseType["name"], courseType.get("lectures")))
                 con.commit()
             except Exception as e: 
                 print(e)

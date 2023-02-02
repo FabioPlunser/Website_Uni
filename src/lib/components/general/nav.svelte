@@ -1,4 +1,5 @@
 <script lang="ts">
+  import dataScience from "$assets/dataScience.png"
 	import { navStore } from '$stores/navStore';
   import { theme } from "$stores/themeStore";
   import { page } from "$app/stores";
@@ -14,12 +15,16 @@
   ]
 </script>
 
-<nav class="navbar bg-base-100">
-  <div class="flex-1">
-    <a href="/" class="font-bold btn btn-ghost normal-case text-xl">UIBK-Help</a>
-  </div>
-  <MediaQuery query="(min-width: 590px)" let:matches>
-    {#if matches}
+
+<MediaQuery query="(min-width: 590px)" let:matches>
+  {#if matches}
+  <nav class="navbar bg-base-100">
+    <div class="flex-1">
+      <a href="/" class="font-bold btn btn-ghost normal-case text-xl">
+        <img src={dataScience} alt="icon" class="flex items-center mr-2 w-12 h-auto"/>
+        UIBK-Help
+      </a>
+    </div>
       <div class="flex-none">
         <ul class="menu menu-horizontal font-bold text-shadow px-1">
           {#each links as link}
@@ -54,24 +59,33 @@
           </li>
         </ul>
       </div>
-    {:else}
+    </nav>
+  {:else}
+    <nav class="flex bg-base-100">
+      <div class="flex-1">
+        <a href="/" class="font-bold btn btn-ghost normal-case text-xl">
+          <img src={dataScience} alt="icon" class="flex items-center mr-2 w-12 h-auto"/>
+          UIBK-Help
+        </a>
+      </div>
       <div class="flex-none">
         <div class="menu menu-horizontal px-1">
-          <div on:mouseleave={()=>open = false} class="dropdown dropdown-end max-w-none">
+          <div class="">
             <button on:click="{() => open = !open}" class="btn btn-ghost btn-circle ">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current translate transition-all {open ? "rotate-90" : "rotate-0"}"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current translate transition-all font-bold {open ? "rotate-90" : "rotate-0"}"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
 
-            {#if open}
-            <div>
-              <ul class="right-0 absolute z-50 p-2 shadow-xl bg-base-300 rounded-box w-max">
-                {#each links as link}
-                  <li class="w-full"><a class="w-full" href={link.href}>{link.text}</a></li>
-                {/each}
-              </ul>
-            </div>
-            {/if}
+            <!-- {#if open}
+              <div>
+                <ul class="right-0 absolute z-50 p-2 shadow-xl bg-base-300 rounded-box w-max">
+                  {#each links as link}
+                    <li class="w-full"><a class="w-full" href={link.href}>{link.text}</a></li>
+                  {/each}
+                </ul>
+              </div>
+            {/if} -->
           </div>  
+
           <div tabindex="-1" class="flex items-center">
             <label tabindex="-1" class="swap swap-rotate">
               <input type="checkbox" class="hidden" bind:checked={$theme} />
@@ -81,6 +95,17 @@
           </div>
         </div>
       </div>
-    {/if}
-  </MediaQuery>
-</nav>
+    </nav>
+    <div class="flex justify-center">
+      {#if open}
+        <div transition:slide class="flex ">
+            {#each links as link}
+              <div class="mx-1">
+                <a class="flex justify-center w-full font-bold" href={link.href}>{link.text}</a>
+              </div>
+            {/each}
+        </div>
+      {/if}
+    </div>
+  {/if}
+</MediaQuery>

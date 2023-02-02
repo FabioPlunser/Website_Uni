@@ -18,7 +18,7 @@
       
     </div>
     
-    <div class="mt-24 grid grid-cols-3 sm:grid-rows gap-10 justify-center">
+    <div class="mt-24 grid grid-rows sm:grid-cols-2 md:grid-cols-3  gap-10 justify-center">
             <IndexCards>
                 <h2 class="card-title">Course Selector <i class="bi bi-calendar2-week"></i> </h2>
                 <p>
@@ -70,20 +70,17 @@
             </IndexCards>
         </div>
 
-        <div class="opacity-50">
-            <IndexCards>
-                <h2 class="card-title">Files <i class="bi bi-archive-fill w-8 h-auto"></i></h2>
-                <h1 class="text-3xl">Under planing</h1>
+        <IndexCards>
+            <h2 class="card-title">Files <i class="bi bi-archive-fill w-8 h-auto"></i></h2>
+            <p>
+                Here you can find some files that are useful for students. 
+                For example some templates for latex or some proseminar homework.
+            </p>
+            <div class="card-actions justify-end">
+                <a href="/files" class="btn btn-primary">Go</a>
+            </div>
+        </IndexCards>
 
-                <!-- <p>
-                    Here you can find some files that are useful for students. 
-                    For example some templates for latex or some proseminar homework.
-                </p>
-                <div class="card-actions justify-end">
-                    <a href="/memori" class="btn btn-primary">Go</a>
-                </div> -->
-            </IndexCards>
-        </div>
         
     </div>
 </section>
