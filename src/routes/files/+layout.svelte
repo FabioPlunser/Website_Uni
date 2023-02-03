@@ -11,7 +11,7 @@
 		{/key}
 	</div>
 
-	<div class="flex gap-1 items-center">
+	<div class="hidden md:block gap-1 items-center">
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<i on:click={()=>$filesLayoutStore="list"} class="font-bold text-3xl bi bi-list p-4 rounded-xl {$filesLayoutStore==="grid" ? "text-gray-500 hover:bg-base-300" : "text-black dark:text-white"}"></i>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->

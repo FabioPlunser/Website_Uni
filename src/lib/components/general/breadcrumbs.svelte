@@ -6,24 +6,15 @@
     crumbs = [...crumbs];
 </script>
 
-<div class="font-bold breadcrumbs">
+<div class="text-sm max-w-xs md:max-w-none md:text-base md:font-bold breadcrumbs">
     <ul>
         {#each crumbs as crumb, i}
-            {#if crumb.includes(".")}
-                <li>
-                    <a href="{$page.url.pathname.split("/", i+2).join("/")}">
-                        <i class="bi bi-file-earmark-fill"></i>
-                        {crumb = crumb.charAt(0).toUpperCase() + crumb.slice(1)}
-                    </a>
-                </li>
-            {:else}
-                <li>
-                    <a href="{$page.url.pathname.split("/", i+2).join("/")}">
-                        <i class="bi bi-archive mx-1"></i>
-                        {crumb = crumb.charAt(0).toUpperCase() + crumb.slice(1)}
-                    </a>
-                </li>
-            {/if}
+            <li>
+                <a href="{$page.url.pathname.split("/", i+2).join("/")}">
+                    <i class="hidden md:block bi bi-archive mx-1"></i>
+                    {crumb = crumb.charAt(0).toUpperCase() + crumb.slice(1)}
+                </a>
+            </li>
         {/each}
     </ul>
 </div>
