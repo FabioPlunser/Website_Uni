@@ -5,6 +5,7 @@ import { resolve } from 'path';
 
 export const GET = (async (event) => {
     let path = event.url.pathname;
+    console.log(path);
     path = path.split("/").slice(2).join("/");
     const filePath = resolve("./fileSharing/" + path);
     const fileExtension = filePath.split(".").pop();

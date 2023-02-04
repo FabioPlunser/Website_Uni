@@ -43,11 +43,11 @@
 <svelte:window on:keydown={handleKeydown} />
 
 
-<div class="w-full h-auto max-w-md" on:mouseleave={()=> open = false}>
-    <input on:click={()=>open=true}  type="text" placeholder="search" bind:value={search} class="input w-full bg-base-300 " />
+<div class="h-auto w-fit" on:mouseleave={()=> open = false}>
+    <input on:click={()=>open=true}  type="text" placeholder="search" bind:value={search} class="w-fit input bg-base-300 " />
     {#if open}
-        <div class="absolute z-[999] w-full max-w-md">
-            <ul transition:slide={{duration: 200}} class="w-full h-auto max-h-64 max-w-md bg-base-300 rounded-xl shadow-2xl mt-3 overflow-y-scroll ">
+        <div class="absolute z-[999]">
+            <ul transition:slide={{duration: 200}} class="h-auto max-h-64 max-w-md bg-base-300 rounded-xl shadow-2xl mt-3 overflow-y-scroll overflow-x-scroll ">
                 {#if !data}
                     <div class="p-4">
                         <Spinner size={"8"}/>

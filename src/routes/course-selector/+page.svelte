@@ -18,7 +18,7 @@
     let selectedGroup:any = null;
     $: selected = $selectorSteps[$selectorSteps.length-1].currentStep;
     let events:any[] = [];
-    let data = null;
+    let data:any = null;
     
     onMount(async ()=>{
         await initFetch();
@@ -127,10 +127,12 @@
 
 
 <section class="z-0">
-    <Steps bind:selected {gotToStep}/>
-    <div class="mt-8 flex justify-center min-w-fit max-w-full">
-        <SearchInput on:GET={nextStep} bind:data/>
-        <button class="btn btn-primary mx-2" on:click={()=>showDetailModal=true}>Detail</button>
+    <div class=" justify-center w-full">
+        <Steps bind:selected {gotToStep}/>
+        <div class="mt-8 flex justify-center w-full">
+            <SearchInput on:GET={nextStep} bind:data/>
+            <button class="btn btn-primary mx-2" on:click={()=>showDetailModal=true}>Detail</button>
+        </div>
     </div>
    
     <br class="mt-12"/>
