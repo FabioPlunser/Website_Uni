@@ -1,22 +1,35 @@
 <script lang="ts">
     import folder from "$assets/folder.png"
+    import MediaQuery from "$helper/MediaQuery.svelte";
+    import Modal from "$components/general/Modal.svelte";
+
     import { page } from "$app/stores"
     import { filesLayoutStore } from '../filesLayoutStore';
-    import MediaQuery from "$helper/MediaQuery.svelte";
+
+
     export let data:any; 
+    let video:any = false;
 
 
     async function download(path: any){
         let response = await fetch(`${$page.url.pathname}/${path}`);
         let data = await response.blob();
-        console.log(data);
-
-        const url = URL.createObjectURL(data);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = path;
-        document.body.appendChild(link);
-        link.click();
+        let url = URL.createObjectURL(data);
+        
+        if(path.includes(".mp4")){
+            video = true;
+            document.getElementById("videoId").setAttribute("src", url);//video tag id
+            document.getElementById("videoId").play();//this is source tag id
+            
+        }else{
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = path;
+            document.body.appendChild(link);
+            link.click();
+        }
+        
+        
     }
 </script>
 
@@ -24,6 +37,11 @@
 <section>
 <MediaQuery query="(min-width: 590px)" let:matches>
     {#if matches}
+        <!-- svelte-ignore a11y-media-has-caption -->
+        <Modal open={video} on:close={()=> video = false}>
+            <video on:submit|preventDefault={()=>console.log("Download")} on:ended={()=>video=false} id="videoId" controls/>
+        </Modal>
+
         {#if $filesLayoutStore==="grid"}
             <div class="grid grid-cols-5">
                 {#each data.folders as f}

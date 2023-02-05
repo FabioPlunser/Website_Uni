@@ -136,56 +136,7 @@
     </div>
    
     <br class="mt-12"/>
-    <!-- {#if selected >= 4}
-        <div class="flex justify-center">
-            <label class="flex items-center">
-                <span class="text-lg font-bold flex">Show Groups: </span>
-                <input type="checkbox" class="toggle checkbox-primary flex items-center mx-2" bind:checked={showGroups}/>
-            </label>
-        </div>
-    {/if} -->
-    <!-- {#if selected >= 4 && showGroups}
-        {#if $groups.length == 0}
-            <Spinner/>
-        {:else}
-            {#each $groups as groups}
-                <div transition:slide class="mt-8">
-                    <h1 class="text-2xl font-bold">{groups?.course}</h1>
-                    <div class="flex overflow-x-auto bg-base-100">
-                        <table class="table table-compact table-zebra w-full">
-                            <thead>
-                                <tr>
-                                    {#each groupTableHeaders as header}
-                                        <th>{header}</th>
-                                    {/each} 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {#each groups.groups as group}
-                                    {#if group?.times.length < 1}
-                                        <tr>
-                                            <td colspan="7" class="text-center">No Times Found</td>
-                                        </tr>
-                                    {/if}
-                                    <tr transition:slide>
-                                        <td>{group.number}</td>
-                                        <td>{new Date(group?.times[0].from).toLocaleString("de-De", {weekday: 'short'})}:  {new Date(group?.times[0].from).toLocaleString("de-DE", {day: 'numeric', month: 'numeric', year: 'numeric'})}</td>
-                                        <td>{new Date(group?.times[0]?.from).toLocaleString('de-De', { hour: '2-digit', minute: '2-digit'})} - {new Date(group?.times[0]?.to).toLocaleString('de-De', { hour: '2-digit', minute: '2-digit'})} </td>
-                                        <td>{group.times[0].location}</td>
-                                        <td>{group.times[0].comment}</td>
-                                        <td><button class="btn btn-success" on:click={()=> addGroupToCalendar(group, groups)}>Select</button></td>
-                                        <td><button class="btn btn-secondary" on:click={()=>{selectedGroup=group, showGroupModal=true}}>Details</button></td>
-                                    </tr>
-                                {/each}
-                        </table>
-                    </div>
-                    {#if groups?.groups.length < 1}
-                        <div class="text-center font-bold text-xl">No Groups Found</div>
-                    {/if}
-                </div>
-            {/each}
-        {/if}
-    {/if} -->
+
 
     {#if showDetailModal}
         <Modal open={showDetailModal} on:close={()=> showDetailModal = false}>
@@ -194,19 +145,6 @@
             </div>
         </Modal>
     {/if}
-
-    <!-- {#if showGroupModal}
-        <Modal open={showGroupModal} on:close={()=> showGroupModal = false}>
-            <div class="max-w-3xl break-all">
-                <GroupTable group={selectedGroup}/>
-            </div>
-        </Modal>
-    {/if} -->
-
-    <!-- <br class="mt-12"/>
-    {#if selected >= 4}
-        <Calendar bind:events />
-    {/if} -->
 
 
 </section>
