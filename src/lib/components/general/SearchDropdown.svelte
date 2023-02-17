@@ -5,7 +5,7 @@
     import Spinner from './Spinner.svelte';
 
     export let data: any = null;
-    
+
     let search = "";
     let open = false;
 
@@ -44,10 +44,10 @@
 
 
 <div class="h-auto w-fit" on:mouseleave={()=> open = false}>
-    <input on:click={()=>open=true}  type="text" placeholder="search" bind:value={search} class="w-fit input bg-base-300 " />
+    <input on:click={()=>open=true}  type="text" placeholder="search" bind:value={search} class="w-fit md:w-[580px] input bg-base-300 " />
     {#if open}
-        <div class="absolute z-[999]">
-            <ul transition:slide={{duration: 200}} class="h-auto max-h-64 max-w-md bg-base-300 rounded-xl shadow-2xl mt-3 overflow-y-scroll overflow-x-scroll ">
+        <div class="absolute z-[999] w-fit">
+            <ul transition:slide={{duration: 200}} class="h-auto max-h-64 max-w-md md:max-w-xl bg-base-300 rounded-xl shadow-2xl mt-3 overflow-y-scroll overflow-x-scroll ">
                 {#if !data}
                     <div class="p-4">
                         <Spinner size={"8"}/>

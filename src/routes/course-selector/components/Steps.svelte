@@ -12,8 +12,8 @@
 </script>
 
 
-<div class="flex justify-center mx-auto items-center">
-    <ul class="steps break-all"> 
+<div class="flex justify-center items-center">
+    <ul class="steps break-all md:w-[800px]"> 
         {#each steps as step, i}
             {#if i < selected}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
