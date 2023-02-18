@@ -1,6 +1,5 @@
 <script lang="ts">
-    import MediaQuery from "$helper/MediaQuery.svelte";
-    export let selected: number;
+    export let stepCount: number;
     export let gotToStep: (step: number) => void;
 
     let steps = [
@@ -12,14 +11,14 @@
 </script>
 
 
-<div class="flex justify-center items-center">
-    <ul class="steps break-all md:w-[800px]"> 
+<div class="flex justify-center items-center w-full">
+    <ul class="steps break-all w-full"> 
         {#each steps as step, i}
-            {#if i < selected}
+            {#if i < stepCount}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li data-content="✓" on:click={()=>{gotToStep(i)}} class="step cursor-pointer {selected >= i && "step-primary"}">{step.name}</li>
-            {:else if i == selected}
-                <li  class="step {selected >= i && "step-primary"}">{step.name}</li>
+                <li data-content="✓" on:click={()=>{gotToStep(i)}} class="step cursor-pointer {stepCount >= i && "step-primary"}">{step.name}</li>
+            {:else if i == stepCount}
+                <li  class="step {stepCount >= i && "step-primary"}">{step.name}</li>
             {:else}
                 <li class="step">{step.name}</li>
             {/if}
